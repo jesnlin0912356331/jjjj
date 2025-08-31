@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>○○清潔｜冷氣・洗衣機・水塔・自來水管清洗</title>
+  <meta name="description" content="專業到府清洗：冷氣、直立式洗衣機、水塔、自來水管。透明價格、到府快速、提供保固與發票。立即以 LINE/電話預約。" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html{scroll-behavior:smooth}
+    :root{--bg:#fff;--text:#0f172a;--muted:#475569;--card-bg:#fff;--border:#e2e8f0;--primary:#0369a1;--primary-hover:#075985;--success:#059669;--success-hover:#047857;--ghost-bg:#fff;--ghost-border:#cbd5e1;--accent:#f59e0b}
+    @media (prefers-color-scheme: dark){:root{--bg:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--card-bg:#0f172a;--border:#1f2937;--ghost-bg:#0f172a;--ghost-border:#334155;--accent:#fbbf24}}
+    body.dark{--bg:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--card-bg:#0f172a;--border:#1f2937;--ghost-bg:#0f172a;--ghost-border:#334155;--accent:#fbbf24}
+    body.light{--bg:#fff;--text:#0f172a;--muted:#475569;--card-bg:#fff;--border:#e2e8f0;--ghost-bg:#fff;--ghost-border:#cbd5e1;--accent:#f59e0b}
+    body[data-theme]{background:var(--bg);color:var(--text)}
+    .muted{color:var(--muted)}
+    .btn{display:inline-block;padding:.75rem 1.25rem;border-radius:.75rem;font-weight:600;transition:transform .15s ease,background-color .2s ease,box-shadow .2s ease}
+    .btn:hover{transform:scale(1.05)}
+    .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-hover)}
+    .btn-success{background:var(--success);color:#fff}.btn-success:hover{background:var(--success-hover)}
+    .btn-ghost{background:var(--ghost-bg);border:1px solid var(--ghost-border);color:var(--text)}.btn-ghost:hover{box-shadow:0 6px 20px rgba(0,0,0,.08)}
+    .card{background:var(--card-bg);border:1px solid var(--border);border-radius:1rem;padding:1.25rem}
+    .card-title{font-weight:700;font-size:1.125rem}
+    .card-desc{margin-top:.5rem;font-size:.9rem;color:var(--muted)}
+    .card-list{margin-top:.75rem;padding-left:1.25rem;list-style:disc;font-size:.9rem}
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+    .theme-toggle{position:fixed;bottom:5rem;right:1rem;width:48px;height:48px;border-radius:9999px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(3,105,161,.35);cursor:pointer;z-index:60}
+    /* FAQ / details 樣式 + 動畫 */
+    details.faq{background:var(--card-bg);border:1px solid var(--border);border-radius:.75rem;padding:1rem;margin-bottom:.75rem}
+    details.faq summary{cursor:pointer;font-weight:600;position:relative;padding-left:1.5rem}
+    details.faq summary::-webkit-details-marker{display:none} details.faq summary::marker{content:""}
+    details.faq summary::before{content:"➕";position:absolute;left:0;top:.1rem;font-size:1.1rem;color:var(--muted);transition:transform .2s ease,color .2s ease}
+    details.faq[open] summary::before{content:"➖";color:var(--primary)}
+    details.faq .faq-content{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s ease,opacity .3s ease}
+    details.faq[open] .faq-content{max-height:1000px;opacity:1}
+    /* 時間軸 */
+    .timeline{position:relative;margin-left:1rem}
+    .timeline:before{content:"";position:absolute;left:12px;top:0;bottom:0;width:2px;background:var(--border)}
+    .timeline-item{position:relative;padding-left:2.5rem;margin-bottom:1rem}
+    .timeline-item:before{content:"";position:absolute;left:3px;top:.35rem;width:18px;height:18px;border-radius:9999px;background:var(--accent)}
+    /* 省電試算 */
+    .calc-grid{display:grid;grid-template-columns:1fr;gap:1rem}
+    @media(min-width:768px){.calc-grid{grid-template-columns:1fr 1fr}}
+    .calc-card{background:var(--card-bg);border:1px solid var(--border);border-radius:1rem;padding:1rem}
+    .calc-input{width:100%;padding:.65rem .8rem;border-radius:.6rem;border:1px solid var(--border);background:var(--ghost-bg);color:var(--text)}
+    .calc-help{font-size:.85rem;color:var(--muted)}
+    .range{width:100%}
+    .kpi{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    .kpi .box{background:var(--card-bg);border:1px solid var(--border);border-radius:.75rem;padding:.9rem}
+    .kpi .val{font-weight:800;font-size:1.35rem}
+    .kpi .lbl{font-size:.8rem;color:var(--muted)}
+    @media(max-width:768px){.btn{width:100%}}
+  </style>
+</head>
+<body data-theme>
+  <!-- Header -->
+  <header class="bg-white/90 sticky top-0 backdrop-blur z-50 border-b">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="font-extrabold text-xl">○○清潔</div>
+      <nav class="hidden md:flex gap-6 text-sm">
+        <a href="#services">服務項目</a>
+        <a href="#pricing">價格</a>
+        <a href="#process">流程</a>
+        <a href="#ac-sop">冷氣SOP</a>
+        <a href="#calculator">省電試算</a>
+        <a href="#cases">案例</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">預約</a>
+      </nav>
+      <a href="https://line.me/R/ti/p/@你的ID" class="hidden md:inline-block btn btn-primary">LINE 諮詢</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="bg-gradient-to-b from-sky-50 to-white">
+    <div class="max-w-6xl mx-auto px-4 py-14 text-center">
+      <h1 class="text-3xl md:text-5xl font-extrabold">冷氣・洗衣機・水塔・自來水管 到府專業清洗</h1>
+      <p class="mt-4 text-lg muted">透明價格｜完工保固｜環保清潔劑｜可開立發票</p>
+      <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="tel:+8869xxxxxxxx" class="btn btn-ghost">一鍵撥打</a>
+        <a href="https://line.me/R/ti/p/@你的ID" class="btn btn-primary">LINE 立即預約</a>
+        <a href="#contact" class="btn btn-success">表單免費估價</a>
+      </div>
+      <ul class="mt-6 flex flex-wrap gap-3 justify-center text-sm muted">
+        <li>累積服務 2,000+ 戶</li><li>到府 2–3 小時完工</li><li>設備保護與現場防滴處理</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 服務項目 -->
+  <section id="services" class="max-w-6xl mx-auto px-4 py-12 reveal">
+    <h2 class="text-2xl md:text-3xl font-bold mb-6">服務項目</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="card">
+        <h3 class="card-title">冷氣清洗</h3>
+        <p class="card-desc">拆洗蒸發器、風鼓、濾網，防水防滴處理。</p>
+        <a href="#ac-sop" class="btn btn-ghost mt-3">查看完整 SOP →</a>
+      </div>
+      <div class="card">
+        <h3 class="card-title">直立式洗衣機清洗</h3>
+        <p class="card-desc">全機拆洗除黴與水垢，還原洗淨力。</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">水塔清洗</h3>
+        <p class="card-desc">排空、刷洗、消毒，附清洗照片存證。</p>
+      </div>
+      <div class="card">
+        <h3 class="card-title">自來水管清洗</h3>
+        <p class="card-desc">脈衝清洗去除鏽垢，改善黃水/水壓不穩。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 價格 -->
+  <section id="pricing" class="bg-slate-50 reveal">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6">透明價格</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead><tr class="border-b"><th class="py-3">項目</th><th>基本價格</th><th>加購/加價</th><th>備註</th></tr></thead>
+          <tbody>
+            <tr class="border-b"><td class="py-3">冷氣（分離式/台）</td><td>$○,○○○ 起</td><td>室外機、架高/加層</td><td>含防滴與清潔劑</td></tr>
+            <tr class="border-b"><td class="py-3">洗衣機（直立式）</td><td>$○,○○○ 起</td><td>嚴重汙垢加時</td><td>全機拆洗殺菌</td></tr>
+            <tr class="border-b"><td class="py-3">水塔</td><td>$○,○○○ 起</td><td>大容量另計</td><td>附清洗照片</td></tr>
+            <tr><td class="py-3">自來水管</td><td>$○,○○○ 起</td><td>管線複雜另計</td><td>改善黃水/水壓</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-4 text-sm muted">＊可先 LINE 傳照片快速報價，實際費用以現場與機型為準。</p>
+    </div>
+  </section>
+
+  <!-- 施工流程（含到府前準備折疊） -->
+  <section id="process" class="max-w-6xl mx-auto px-4 py-12 reveal">
+    <h2 class="text-2xl md:text-3xl font-bold mb-6">施工流程</h2>
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- 左：時間軸 -->
+      <div class="p-5 rounded-2xl border">
+        <div class="timeline">
+          <div class="timeline-item">
+            <h3 class="font-semibold">步驟 1｜線上估價與預約</h3>
+            <p class="muted text-sm mt-1">LINE 傳地址、設備照片與樓層，安排時段並確認費用區間。</p>
+          </div>
+          <div class="timeline-item">
+            <h3 class="font-semibold">步驟 2｜到府前防護與檢查</h3>
+            <p class="muted text-sm mt-1">鋪設防滴布、養生膠帶保護；實機測試功能、觀察結霜與溫差。</p>
+          </div>
+          <div class="timeline-item">
+            <h3 class="font-semibold">步驟 3｜拆機與深度清洗</h3>
+            <p class="muted text-sm mt-1">清洗熱交換器、風鼓、導風坡道、濾網與集水盤；環保藥劑不傷材。</p>
+          </div>
+          <div class="timeline-item">
+            <h3 class="font-semibold">步驟 4｜組裝回測與漏水檢查</h3>
+            <p class="muted text-sm mt-1">恢復裝機、運轉測試、檢查異音/滴水，確認運作穩定。</p>
+          </div>
+          <div class="timeline-item">
+            <h3 class="font-semibold">步驟 5｜收尾清場與保固說明</h3>
+            <p class="muted text-sm mt-1">現場清潔、提供對照圖與保養貼紙，說明 14 天保固內容。</p>
+          </div>
+        </div>
+      </div>
+      <!-- 右：到府前準備（折疊＋動畫） -->
+      <div class="card">
+        <h3 class="card-title">到府前準備</h3>
+        <details class="faq" open>
+          <summary>冷氣施工</summary>
+          <div class="faq-content">
+            <p class="card-desc">請提前清出室內機下方空間以便擺放 A 字梯。若下方為大型衣櫃/床/沙發等，將由師傅視情況協助判斷是否可移動。</p>
+          </div>
+        </details>
+        <details class="faq"><summary>直立式洗衣機施工</summary><div class="faq-content"><ul class="card-list"><li>請先清空內桶與上蓋置物，避免震動掉落。</li><li>周邊預留操作空間；狹窄陽台/浴室可先拍照提供。</li></ul></div></details>
+        <details class="faq"><summary>水塔清洗</summary><div class="faq-content"><ul class="card-list"><li>確認屋頂/機房通道可進出，提供容量與材質。</li><li>如需停水公告請提前申請；清洗期間建議事先儲水。</li></ul></div></details>
+        <details class="faq"><summary>自來水管清洗</summary><div class="faq-content"><ul class="card-list"><li>施工期間接入脈衝設備，請保留廚房/浴室可作業區。</li><li>若有淨水器/熱水器/軟水機，請先提供型號或告知。</li></ul></div></details>
+        <details class="faq"><summary>通用提醒</summary><div class="faq-content"><ul class="card-list"><li>若需停車證或車位費，請事先告知。</li><li>請確保施工用電與水源可用；如需搬運請協助預留電梯。</li><li>幼童/長者/寵物施工時建議暫時隔離。</li></ul></div></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 冷氣清洗｜完整 SOP 與保固 -->
+  <section id="ac-sop" class="max-w-6xl mx-auto px-4 py-12 reveal">
+    <h2 class="text-2xl md:text-3xl font-bold mb-6">冷氣清洗｜完整 SOP 與保固</h2>
+
+    <!-- 前置檢查 -->
+    <details class="faq" open>
+      <summary>🧾 前置檢查流程（功能／冷媒／運轉／溝通）</summary>
+      <div class="faq-content">
+        <ul class="card-list">
+          <li><strong>功能檢測：</strong>啟動冷氣運轉，確認出風、溫控、遙控反應。</li>
+          <li><strong>冷媒狀態：</strong>檢查是否結霜，初步評估溫差（異常建議由冷凍專業處理）。</li>
+          <li><strong>機件運轉：</strong>觀察風輪聲音、面板/擺風葉片是否順暢，排水是否正常。</li>
+          <li><strong>異常處理：</strong>若發現異常，先與屋主溝通風險與可能後果，再共同決定是否繼續清洗。</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- 環境防護 -->
+    <details class="faq">
+      <summary>🛡 環境防護作業（膠帶保護／圍水區）</summary>
+      <div class="faq-content">
+        <p class="card-desc"><em>「清洗前什麼樣，清洗後就維持那樣」</em> 是我們的基本態度。</p>
+        <ul class="card-list">
+          <li>使用低黏性養生膠帶保護牆面、插座、櫃體（實際仍視漆面狀況而定）。</li>
+          <li>以養生膠帶延伸固定防水墊，形塑「圍水區」避免濺濕地面。</li>
+        </ul>
+        <p class="card-desc">📌 以上流程為清洗前必要準備，為了安全與品質，絕不省略。</p>
+      </div>
+    </details>
+
+    <!-- 拆機與清洗 -->
+    <details class="faq">
+      <summary>🧼 拆機與清洗作業流程（現場掛洗／部位／藥劑）</summary>
+      <div class="faq-content">
+        <ul class="card-list">
+          <li><strong>作業方式：</strong>現場掛壁式清洗，不移機不拆室內管線。</li>
+          <li><strong>拆卸部件：</strong>外壳、濾網、集水盤等可拆零件。</li>
+          <li><strong>清洗部位：</strong>熱交換器（鋁鰭片）、鼓風扇、導風坡道、濾網、集水盤與排水孔、外殼。</li>
+          <li><strong>工具技巧：</strong>高壓清洗搭配可調噴嘴，依材質調整水壓避免損傷與潑濺。</li>
+          <li><strong>環保藥劑：</strong>弱性環保清潔劑，不傷塑料金屬、不易殘留、無異味。</li>
+          <li><strong>紀錄回報：</strong>清洗前後拍照存證，提供客戶留存，作為下次保養參考。</li>
+          <li><strong>時間估算：</strong>每台約 60 分鐘（含檢測與整理），視機型/位置/髒污調整。</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- 收尾整理 -->
+    <details class="faq">
+      <summary>🧹 收尾整理與環境恢復</summary>
+      <div class="faq-content">
+        <ul class="card-list">
+          <li>零件復原組裝：外殼、濾網、集水盤擦乾並鎖回；卡扣/螺絲逐一確認。</li>
+          <li>功能回測確認：再次運轉檢查異音、水滴、出風，確保穩定。</li>
+          <li>清潔作業區域：移除養生膠帶與防水墊，現場清理無水漬/髒污/垃圾。</li>
+          <li>注意事項：清洗後建議開機 30 分鐘通風；若短暫有藥劑味，可開窗加強通風。</li>
+          <li>清洗完成回報：提供前後對照圖，回答現場提問，張貼保養貼紙（日期/下次建議/聯絡資訊）。</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- 保固 -->
+    <details class="faq" id="ac-sop-warranty">
+      <summary>🛠️ 售後保固說明（14 天）</summary>
+      <div class="faq-content">
+        <ul class="card-list">
+          <li><strong>保固期間：</strong>清洗完成起 14 天。</li>
+          <li><strong>保固內容：</strong>如出現漏水、異音、風速異常等清洗關聯問題，請立即聯繫，我們派員到府處理至正常。</li>
+          <li><strong>排除條件：</strong>原本安裝不良、機件老舊/破裂/鏽蝕/耗損等非清洗因素不在保固範圍。</li>
+        </ul>
+        <p class="card-desc">📞 有狀況請立刻聯繫我們（電話 / LINE），我們負責到底。</p>
+      </div>
+    </details>
+  </section>
+
+  <!-- 省電效益試算 -->
+  <section id="calculator" class="max-w-6xl mx-auto px-4 py-12 reveal">
+    <h2 class="text-2xl md:text-3xl font-bold mb-6">省電效益試算</h2>
+    <div class="calc-grid">
+      <div class="calc-card">
+        <label class="text-sm font-semibold">設備類型</label>
+        <select id="device" class="calc-input mt-1"><option value="ac" selected>冷氣（分離式/窗型）</option><option value="wm">直立式洗衣機</option><option value="pump">加壓/給水設備</option></select>
+        <label class="text-sm font-semibold mt-4">每月用電量（kWh）<span class="muted">(清洗前)</span></label>
+        <input id="kwh" type="number" min="0" step="1" class="calc-input mt-1" value="180">
+        <p class="calc-help">可先估整體用電，再拆到單一設備。</p>
+        <label class="text-sm font-semibold mt-4">平均電價（$/kWh）</label>
+        <input id="rate" type="number" min="0" step="0.1" class="calc-input mt-1" value="3">
+        <p class="calc-help">家庭用電約 2.6–5.4 元/kWh（依級距/月份浮動）。</p>
+        <div class="mt-4">
+          <div class="flex items-center justify-between">
+            <label class="text-sm font-semibold">預估效率提升（%）</label><span id="imprLabel" class="calc-help">15%</span>
+          </div>
+          <input id="impr" type="range" min="5" max="35" value="15" class="range">
+          <p class="calc-help">冷氣常見 10–30%；洗衣機/泵浦約 5–20%。</p>
+        </div>
+        <label class="text-sm font-semibold mt-4">每年使用月份（冷氣旺季可填 4–6）</label>
+        <input id="months" type="number" min="1" max="12" class="calc-input mt-1" value="6">
+        <div class="mt-5 flex flex-wrap gap-2">
+          <button id="resetCalc" class="btn btn-ghost">恢復預設</button>
+          <a href="#contact" class="btn btn-success">想更精準？免費估價 →</a>
+        </div>
+      </div>
+      <div class="calc-card">
+        <h3 class="font-semibold mb-3">結果預覽</h3>
+        <div class="kpi">
+          <div class="box"><div class="val" id="saveKwhM">—</div><div class="lbl">每月省下用電（kWh）</div></div>
+          <div class="box"><div class="val" id="saveNTDM">—</div><div class="lbl">每月省下（$）</div></div>
+          <div class="box"><div class="val" id="saveKwhY">—</div><div class="lbl">每年省下用電（kWh）</div></div>
+          <div class="box"><div class="val" id="saveNTDY">—</div><div class="lbl">每年省下（$）</div></div>
+        </div>
+        <div class="mt-5 grid md:grid-cols-2 gap-3">
+          <div class="box p-3 border rounded-lg"><div class="lbl">每月電費（前）</div><div class="val" id="costBeforeM">—</div></div>
+          <div class="box p-3 border rounded-lg"><div class="lbl">每月電費（後）</div><div class="val" id="costAfterM">—</div></div>
+        </div>
+        <p class="calc-help mt-2">此為簡化估算；實際金額依用電級距/季節/機況而異。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 案例 -->
+  <section id="cases" class="max-w-6xl mx-auto px-4 py-12 reveal">
+    <h2 class="text-2xl md:text-3xl font-bold mb-6">前後對比與評價</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <img src="before1.jpg" alt="冷氣清洗前" class="rounded-xl border">
+      <img src="after1.jpg" alt="冷氣清洗後" class="rounded-xl border">
+      <div class="p-5 rounded-xl border"><p class="text-sm">「服務迅速、沒有濺得到處都是，清洗完冷房效率差很多！」— 王先生（內湖）⭐️⭐️⭐️⭐️⭐️</p></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="bg-slate-50 reveal">
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6">常見問題</h2>
+      <details class="faq"><summary>清洗會不會弄髒室內？</summary><div class="faq-content"><p>作業前會做防滴與遮蔽，完工會收拾乾淨。</p></div></details>
+      <details class="faq"><summary>多久清一次比較好？</summary><div class="faq-content"><p>一般家用建議 6–12 個月清洗一次；若有過敏或寵物，建議頻率更高。</p></div></details>
+      <details class="faq"><summary>檢測到異常還會清洗嗎？</summary><div class="faq-content"><p>會先與您溝通風險與可能後果，再共同決定是否繼續；若為冷媒/安裝問題，建議由冷凍專業處理。</p></div></details>
+      <details class="faq"><summary>清洗後若有問題怎麼處理？有保固嗎？</summary><div class="faq-content"><p>提供 14 天售後保固，若出現漏水、異音、風速異常等清洗關聯問題，將由專人到府處理；安裝不良或機件老化等非清洗因素不在範圍。</p></div></details>
+    </div>
+  </section>
+
+  <!-- 聯絡 / 預約 -->
+  <section id="contact" class="max-w-6xl mx-auto px-4 py-12 reveal">
+    <h2 class="text-2xl md:text-3xl font-bold mb-6">聯絡 / 預約</h2>
+    <div class="grid md:grid-cols-2 gap-6 items-start">
+      <div class="p-5 rounded-2xl border">
+        <h3 class="font-bold">快速通道</h3>
+        <ul class="mt-3 text-sm">
+          <li>電話：<a href="tel:+8869xxxxxxxx" class="text-sky-700 underline">+886 9xx-xxx-xxx</a></li>
+          <li>LINE：<a href="https://line.me/R/ti/p/@你的ID" class="text-sky-700 underline">@你的ID</a></li>
+          <li>服務時間：週一至週六 09:00–20:00</li>
+        </ul>
+      </div>
+      <iframe src="https://docs.google.com/forms/d/e/你的表單ID/viewform?embedded=true" width="100%" height="520" frameborder="0">載入中…</iframe>
+    </div>
+  </section>
+
+  <footer class="bg-white border-t"><div class="max-w-6xl mx-auto px-4 py-8 text-sm muted">© <span id="year"></span> ○○清潔｜統編：XXXXXXXX</div></footer>
+
+  <!-- 行動版浮動快速按鈕 -->
+  <div class="fixed bottom-4 right-4 flex flex-col gap-2 md:hidden">
+    <a href="tel:+8869xxxxxxxx" class="btn btn-ghost">撥打電話</a>
+    <a href="https://line.me/R/ti/p/@你的ID" class="btn btn-primary">LINE 諮詢</a>
+  </div>
+
+  <!-- 深/淺色手動切換 -->
+  <button id="themeToggle" class="theme-toggle" aria-label="切換深淺色">🌙</button>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // 主題初始化與切換
+    const root=document.body, btn=document.getElementById('themeToggle'), KEY='theme-pref';
+    function applyInitialTheme(){
+      const saved=localStorage.getItem(KEY);
+      if(saved==='dark'||saved==='light'){root.classList.toggle('dark',saved==='dark');root.classList.toggle('light',saved==='light');btn.textContent=saved==='dark'?'🌞':'🌙';return;}
+      const prefers=window.matchMedia('(prefers-color-scheme: dark)').matches;
+      root.classList.toggle('dark',prefers);root.classList.toggle('light',!prefers);btn.textContent=prefers?'🌞':'🌙';
+    }
+    applyInitialTheme();
+    const mq=window.matchMedia('(prefers-color-scheme: dark)');
+    if(mq.addEventListener){mq.addEventListener('change',e=>{if(localStorage.getItem(KEY))return;root.classList.toggle('dark',e.matches);root.classList.toggle('light',!e.matches);btn.textContent=e.matches?'🌞':'🌙';});}
+    btn.addEventListener('click',()=>{const d=root.classList.contains('dark');root.classList.toggle('dark',!d);root.classList.toggle('light',d);btn.textContent=d?'🌙':'🌞';localStorage.setItem(KEY,d?'light':'dark');});
+
+    // 滾動 reveal
+    const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}})},{threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // 省電效益試算
+    const els={device:document.getElementById('device'),kwh:document.getElementById('kwh'),rate:document.getElementById('rate'),impr:document.getElementById('impr'),imprLabel:document.getElementById('imprLabel'),months:document.getElementById('months'),saveKwhM:document.getElementById('saveKwhM'),saveNTDM:document.getElementById('saveNTDM'),saveKwhY:document.getElementById('saveKwhY'),saveNTDY:document.getElementById('saveNTDY'),costBeforeM:document.getElementById('costBeforeM'),costAfterM:document.getElementById('costAfterM'),reset:document.getElementById('resetCalc')};
+    const defaults={ac:{impr:15,months:6},wm:{impr:10,months:12},pump:{impr:8,months:12}};
+    function fmtCurrency(n){return isNaN(n)?'—':'NT$ '+n.toLocaleString('zh-TW',{maximumFractionDigits:0})}
+    function fmtKwh(n){return isNaN(n)?'—':n.toLocaleString('zh-TW',{maximumFractionDigits:0})+' kWh'}
+    function recalc(){const kwh=Math.max(0,parseFloat(els.kwh?.value||'0')),rate=Math.max(0,parseFloat(els.rate?.value||'0')),impr=Math.max(0,parseFloat(els.impr?.value||'0'))/100,months=Math.min(12,Math.max(1,parseInt(els.months?.value||'1',10))); if(els.imprLabel)els.imprLabel.textContent=Math.round(impr*100)+'%'; const saveKwhM=kwh*impr, saveNTDM=saveKwhM*rate, saveKwhY=saveKwhM*months, saveNTDY=saveNTDM*months, costBefore=kwh*rate, costAfter=(kwh-saveKwhM)*rate; els.saveKwhM.textContent=fmtKwh(saveKwhM);els.saveNTDM.textContent=fmtCurrency(saveNTDM);els.saveKwhY.textContent=fmtKwh(saveKwhY);els.saveNTDY.textContent=fmtCurrency(saveNTDY);els.costBeforeM.textContent=fmtCurrency(costBefore);els.costAfterM.textContent=fmtCurrency(costAfter);}
+    function applyPreset(){const d=els.device?.value||'ac',p=defaults[d]||defaults.ac; if(els.impr)els.impr.value=p.impr;if(els.months)els.months.value=p.months;if(els.imprLabel)els.imprLabel.textContent=p.impr+'%'; recalc();}
+    ['input','change'].forEach(ev=>{els.kwh?.addEventListener(ev,recalc);els.rate?.addEventListener(ev,recalc);els.impr?.addEventListener(ev,recalc);els.months?.addEventListener(ev,recalc);els.device?.addEventListener(ev,applyPreset);});
+    els.reset?.addEventListener('click',()=>{if(els.device)els.device.value='ac';if(els.kwh)els.kwh.value=180;if(els.rate)els.rate.value=3;applyPreset();});
+    applyPreset();recalc();
+  </script>
+</body>
+</html>
