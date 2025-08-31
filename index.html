@@ -5,56 +5,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>○○清潔｜冷氣・洗衣機・水塔・自來水管清洗</title>
   <meta name="description" content="專業到府清洗：冷氣、直立式洗衣機、水塔、自來水管。透明價格、到府快速、提供保固與發票。立即以 LINE/電話預約。" />
-  <!-- 使用 CDN 版 Tailwind 的預檔案（此案主要用自定 CSS，Tailwind 只輔助間距/排版） -->
+  <!-- Tailwind 只輔助排版；主要樣式都在下方自定 CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
 
+  <!-- 結構化資料（請替換你的實際資訊與網址） -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"CleaningService",
+    "name":"○○清潔",
+    "image":"https://yourdomain.com/cover.jpg",
+    "url":"https://yourdomain.com",
+    "telephone":"+886-9xx-xxx-xxx",
+    "priceRange":"$$",
+    "areaServed":"台北、新北、基隆",
+    "openingHours":"Mo-Sa 09:00-20:00",
+    "sameAs":["https://line.me/R/ti/p/@你的ID"],
+    "serviceType":["冷氣清洗","直立式洗衣機清洗","水塔清洗","自來水管清洗"],
+    "address": {
+      "@type":"PostalAddress",
+      "addressLocality":"台北市",
+      "addressRegion":"台北市",
+      "postalCode":"100",
+      "addressCountry":"TW"
+    },
+    "potentialAction":{
+      "@type":"ReserveAction",
+      "target":"https://yourdomain.com/booking",
+      "result":{"@type":"Reservation","name":"家電清洗預約"}
+    }
+  }
+  </script>
+
   <style>
-    /* === 網頁整體行為：平滑卷動 === */
+    /* === 基本：平滑卷動 === */
     html{scroll-behavior:smooth}
 
     /* =========================
        顏色系統（CSS 變數）
-       - :root 為淺色模式預設
-       - body.dark / body.light 會覆寫對應值
-       - @media prefers-color-scheme: dark 是系統自動偵測
+       :root（淺色預設）／@media 深色／body.dark / body.light 手動覆寫
        ========================= */
     :root{
-      /* 版面與文字（淺色） */
-      --bg:#fff;              /* 網站背景 */
-      --text:#0f172a;         /* 主要文字 */
-      --muted:#475569;        /* 次要說明文字 */
-      --card-bg:#fff;         /* 卡片底色 */
-      --border:#e2e8f0;       /* 邊框色 */
-      /* 互動色（淺色） */
-      /* ⬇︎ btn-primary 在淺色模式下用品牌綠 #06C755（LINE 綠） */
-      --primary:#06C755;      /* 主要按鈕（淺色） */
-      --primary-hover:#04b34c;/* 主要按鈕 hover（淺色） */
-      --success:#059669;      /* 輔助成功色 */
-      --success-hover:#047857;
-      --ghost-bg:#fff;        /* 幽靈鈕底色（透明系） */
-      --ghost-border:#cbd5e1; /* 幽靈鈕邊框 */
-      --accent:#f59e0b;       /* 時間軸圓點等強調色 */
-      /* 標題用強化色（淺色） */
-      --text-strong:#0b1220;
+      --bg:#fff;              /* 網站背景（淺） */
+      --text:#0f172a;         /* 主要文字（淺） */
+      --muted:#475569;        /* 次要文字（淺） */
+      --card-bg:#fff;         /* 卡片底色（淺） */
+      --border:#e2e8f0;       /* 邊框（淺） */
+      /* 主按鈕（淺色：LINE 綠） */
+      --primary:#06C755;
+      --primary-hover:#04b34c;
+      /* 其他按鈕 */
+      --success:#059669; --success-hover:#047857;
+      --ghost-bg:#fff; --ghost-border:#cbd5e1;
+      --accent:#f59e0b;       /* 強調色（時間軸圓點等） */
+      --text-strong:#0b1220;  /* 標題強化色（淺）*/
     }
-
-    /* === 系統偵測：使用者 OS 偏好深色時的預設 === */
     @media (prefers-color-scheme: dark){
       :root{
-        /* 版面與文字（深色） */
-        --bg:#0b1220;
-        --text:#e5e7eb;
-        --muted:#94a3b8;
-        --card-bg:#0f172a;
-        --border:#1f2937;
-        --ghost-bg:#0f172a;
-        --ghost-border:#334155;
-        --accent:#fbbf24;
-        --text-strong:#ffffff;
+        --bg:#0b1220; --text:#e5e7eb; --muted:#94a3b8;
+        --card-bg:#0f172a; --border:#1f2937;
+        --ghost-bg:#0f172a; --ghost-border:#334155;
+        --accent:#fbbf24; --text-strong:#ffffff;
       }
     }
-
-    /* === 手動覆寫：當 body 有 .dark / .light 時優先生效 === */
     body.dark{
       --bg:#0b1220; --text:#e5e7eb; --muted:#94a3b8;
       --card-bg:#0f172a; --border:#1f2937;
@@ -67,60 +80,34 @@
       --ghost-bg:#fff; --ghost-border:#cbd5e1;
       --accent:#f59e0b; --text-strong:#0b1220;
     }
-
-    /* 將變數套用到 body */
     body[data-theme]{background:var(--bg);color:var(--text)}
     .muted{color:var(--muted)}
 
     /* =========================
-       標題/卡片標題強化（對比更好）
+       標題/卡片標題強化
        ========================= */
     h1,h2,h3{ color:var(--text-strong); letter-spacing:.2px }
-    h1{ font-weight:800 } 
-    h2{ font-weight:800 } 
-    h3{ font-weight:700 }
+    h1{ font-weight:800 } h2{ font-weight:800 } h3{ font-weight:700 }
     .card-title{ color:var(--text-strong); font-weight:800 }
-
-    /* =========================
-       基本元件（按鈕 / 卡片）
-       - .btn-primary 在淺色用品牌綠
-       - 深色模式會另外覆寫（見文末「深色模式對比修正包」）
-       ========================= */
-    .btn{
-      display:inline-block;padding:.75rem 1.25rem;border-radius:.75rem;
-      font-weight:600;transition:transform .15s ease,background-color .2s ease,box-shadow .2s ease
-    }
-    .btn:hover{transform:scale(1.05)}
-
-    /* 主要按鈕（淺色模式：品牌綠） */
-    .btn-primary{background:var(--primary);color:#fff}
-    .btn-primary:hover{background:var(--primary-hover)}
-
-    /* 成功按鈕（次要操作用） */
-    .btn-success{background:var(--success);color:#fff}
-    .btn-success:hover{background:var(--success-hover)}
-
-    /* 幽靈鈕（白底或深底半透明 + 邊框） */
-    .btn-ghost{
-      background:var(--ghost-bg);
-      border:1px solid var(--ghost-border);
-      color:var(--text)
-    }
-    .btn-ghost:hover{box-shadow:0 6px 20px rgba(0,0,0,.08)}
-
-    /* 卡片樣式（列表、說明區塊） */
-    .card{
-      background:var(--card-bg);border:1px solid var(--border);
-      border-radius:1rem;padding:1.25rem
-    }
     .card-desc{margin-top:.5rem;font-size:.9rem;color:var(--muted)}
     .card-list{margin-top:.75rem;padding-left:1.25rem;list-style:disc;font-size:.9rem}
 
-    /* 深色下邊界更清楚（統一加深邊線） */
+    /* =========================
+       元件：按鈕 / 卡片
+       ========================= */
+    .btn{display:inline-block;padding:.75rem 1.25rem;border-radius:.75rem;font-weight:600;transition:transform .15s ease,background-color .2s ease,box-shadow .2s ease}
+    .btn:hover{transform:scale(1.05)}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-hover)}
+    .btn-success{background:var(--success);color:#fff}
+    .btn-success:hover{background:var(--success-hover)}
+    .btn-ghost{background:var(--ghost-bg);border:1px solid var(--ghost-border);color:var(--text)}
+    .btn-ghost:hover{box-shadow:0 6px 20px rgba(0,0,0,.08)}
+    .card{background:var(--card-bg);border:1px solid var(--border);border-radius:1rem;padding:1.25rem}
     body.dark .card, body.dark .border{ border-color:#334155 !important }
 
     /* =========================
-       滾動進場動畫（IntersectionObserver 觸發）
+       滾動進場動畫
        ========================= */
     .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
     .reveal.visible{opacity:1;transform:translateY(0)}
@@ -133,44 +120,33 @@
       background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;
       box-shadow:0 8px 24px rgba(3,105,161,.35);cursor:pointer;z-index:60;touch-action:none
     }
-    /* 手機：把主題鈕挪到左下、抬高避免擋到 FAB（撥打電話/LINE） */
+    /* 手機：主題鈕移左下並抬高；FAB（電話/LINE）放右下 */
     @media (max-width: 767.98px){
       .theme-toggle{ right:auto !important; left:1rem !important; bottom:calc(7.5rem + env(safe-area-inset-bottom,0px)) !important; }
       .mobile-fab{ bottom:calc(1rem + env(safe-area-inset-bottom,0px)) !important; right:1rem !important; }
     }
 
     /* =========================
-       FAQ 折疊樣式（<details> 美化）
+       FAQ 折疊（<details> 美化）
        ========================= */
-    details.faq{
-      background:var(--card-bg);border:1px solid var(--border);
-      border-radius:.75rem;padding:1rem;margin-bottom:.75rem
-    }
-    details.faq summary{
-      cursor:pointer;font-weight:600;position:relative;padding-left:1.5rem
-    }
-    details.faq summary::-webkit-details-marker{display:none}
-    details.faq summary::marker{content:""}
-    details.faq summary::before{
-      content:"➕";position:absolute;left:0;top:.1rem;font-size:1.1rem;color:var(--muted);
-      transition:transform .2s ease,color .2s ease
-    }
+    details.faq{background:var(--card-bg);border:1px solid var(--border);border-radius:.75rem;padding:1rem;margin-bottom:.75rem}
+    details.faq summary{cursor:pointer;font-weight:600;position:relative;padding-left:1.5rem}
+    details.faq summary::-webkit-details-marker{display:none} details.faq summary::marker{content:""}
+    details.faq summary::before{content:"➕";position:absolute;left:0;top:.1rem;font-size:1.1rem;color:var(--muted);transition:transform .2s ease,color .2s ease}
     details.faq[open] summary::before{content:"➖";color:var(--primary)}
     details.faq .faq-content{max-height:0;opacity:0;overflow:hidden;transition:max-height .4s ease,opacity .3s ease}
     details.faq[open] .faq-content{max-height:1000px;opacity:1}
 
     /* =========================
-       施工流程：時間軸樣式
+       施工流程：時間軸
        ========================= */
     .timeline{position:relative;margin-left:1rem}
     .timeline:before{content:"";position:absolute;left:12px;top:0;bottom:0;width:2px;background:var(--border)}
     .timeline-item{position:relative;padding-left:2.5rem;margin-bottom:1rem}
-    .timeline-item:before{
-      content:"";position:absolute;left:3px;top:.35rem;width:18px;height:18px;border-radius:9999px;background:var(--accent)
-    }
+    .timeline-item:before{content:"";position:absolute;left:3px;top:.35rem;width:18px;height:18px;border-radius:9999px;background:var(--accent)}
 
     /* =========================
-       省電效益試算：表單與 KPI 區塊
+       省電試算：表單/KPI
        ========================= */
     .calc-grid{display:grid;grid-template-columns:1fr;gap:1rem}
     @media(min-width:768px){.calc-grid{grid-template-columns:1fr 1fr}}
@@ -182,77 +158,42 @@
     .kpi .box{background:var(--card-bg);border:1px solid var(--border);border-radius:.75rem;padding:.9rem}
     .kpi .val{font-weight:800;font-size:1.35rem}
     .kpi .lbl{font-size:.8rem;color:var(--muted)}
-
-    /* 手機：讓主要按鈕自動塞滿一行，便於點擊 */
     @media(max-width:768px){.btn{width:100%}}
 
-    /* 表格表頭更清晰（淺色） */
-    table thead th{ color:var(--text-strong); font-weight:800; border-color:#cbd5e1 }
-    /* 表格表頭（深色的邊線） */
-    body.dark table thead th{ border-color:#334155 }
-
     /* =========================
-       深色模式對比修正包（針對你先前截圖的三區：Hero / 價格 / FAQ）
-       另含 Header / Footer / 幽靈鈕 提升對比
+       深色模式對比修正包（Hero / 價格 / FAQ / Header / Footer / 表格 / 幽靈鈕）
        ========================= */
-    /* Header / Footer 深色底＋邊線 */
     body.dark header{ background: rgba(15,23,42,.92); border-color: #334155 !important; }
     body.dark header nav a{ color:#e5e7eb }
     body.dark footer{ background:#0f172a; border-color:#334155 !important; }
     body.dark footer .muted{ color:#94a3b8 }
-
-    /* Hero 漸層改為深色，副標調亮 */
-    body.dark section.bg-gradient-to-b{
-      background: linear-gradient(180deg,#0f172a 0%, #0b1220 100%) !important;
-    }
+    body.dark section.bg-gradient-to-b{ background: linear-gradient(180deg,#0f172a 0%, #0b1220 100%) !important; }
     body.dark section.bg-gradient-to-b h1{ color:#ffffff }
     body.dark section.bg-gradient-to-b .muted{ color:#cbd5e1 }
-
-    /* 價格區塊整體深底＋表格對比 */
     body.dark #pricing{ background:#0f172a !important; }
     body.dark #pricing table{ color:#e5e7eb }
     body.dark #pricing thead th{ color:#f8fafc; border-color:#334155 !important; font-weight:800; }
     body.dark #pricing tbody tr{ border-color:#334155 }
     body.dark #pricing td{ color:#e5e7eb }
     body.dark #pricing p, body.dark #pricing .muted{ color:#94a3b8 }
-
-    /* FAQ 區：容器與卡片對比拉高 */
     body.dark #faq{ background:#0b1220 !important; }
     body.dark #faq h2{ color:#ffffff }
     body.dark details.faq{ background:#0f172a; border-color:#334155 !important; }
     body.dark details.faq summary{ color:#e5e7eb }
     body.dark details.faq .faq-content{ color:#cbd5e1 }
-
-    /* 表格一般對比保險條 */
     body.dark table thead th{ color:#f8fafc; border-color:#334155 !important; }
     body.dark table td{ color:#e5e7eb }
-
-    /* 幽靈鈕在深色底提升可讀性 */
-    body.dark .btn-ghost{
-      background: rgba(255,255,255,.06);
-      border-color:#334155; color:#e5e7eb;
-    }
+    body.dark .btn-ghost{ background: rgba(255,255,255,.06); border-color:#334155; color:#e5e7eb; }
     body.dark .btn-ghost:hover{ background: rgba(255,255,255,.1) }
     body.dark .card-desc{ color:#cbd5e1 }
-
-    /* === 深色模式：主要按鈕（LINE）改「亮藍」以強對比 ===
-       - 淺色模式用品牌綠（見上方 .btn-primary）
-       - 深色模式覆寫成藍色，對比深色背景更清楚
-    */
-    body.dark .btn-primary{
-      background:#3b82f6;  /* blue-500 */
-      color:#fff;
-    }
-    body.dark .btn-primary:hover{
-      background:#60a5fa;  /* blue-400 */
-    }
+    /* 深色下：主要按鈕改亮藍以提高對比 */
+    body.dark .btn-primary{ background:#3b82f6; color:#fff; }
+    body.dark .btn-primary:hover{ background:#60a5fa; }
   </style>
 </head>
 
 <body data-theme>
-  <!-- =========================
-       Header：導覽與桌機版 LINE 按鈕
-       ========================= -->
+  <!-- Header -->
   <header class="bg-white/90 sticky top-0 backdrop-blur z-50 border-b">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="font-extrabold text-xl">○○清潔</div>
@@ -266,14 +207,11 @@
         <a href="#faq">常見問題</a>
         <a href="#contact">聯絡預約</a>
       </nav>
-      <!-- 桌機：主要行動按鈕（淺色=LINE 綠 / 深色=亮藍） -->
       <a href="https://line.me/R/ti/p/@你的ID" class="hidden md:inline-block btn btn-primary">LINE 諮詢</a>
     </div>
   </header>
 
-  <!-- =========================
-       Hero 首屏：定位賣點 + 三個 CTA
-       ========================= -->
+  <!-- Hero -->
   <section class="bg-gradient-to-b from-sky-50 to-white">
     <div class="max-w-6xl mx-auto px-4 py-14 text-center">
       <h1 class="text-3xl md:text-5xl font-extrabold">冷氣・洗衣機・水塔・自來水管 到府專業清洗</h1>
@@ -281,7 +219,8 @@
       <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
         <a href="tel:+8869xxxxxxxx" class="btn btn-ghost">一鍵撥打</a>
         <a href="https://line.me/R/ti/p/@你的ID" class="btn btn-primary">LINE 立即預約</a>
-        <a href="#contact" class="btn btn-success">表單免費估價</a>
+        <!-- 外連你的預約系統頁 -->
+        <a href="https://yourdomain.com/booking" class="btn btn-success">表單免費估價</a>
       </div>
       <ul class="mt-6 flex flex-wrap gap-3 justify-center text-sm muted">
         <li>累積服務 2,000+ 戶</li><li>到府 2–3 小時完工</li><li>設備保護與現場防滴處理</li>
@@ -289,9 +228,7 @@
     </div>
   </section>
 
-  <!-- =========================
-       服務項目（四卡）
-       ========================= -->
+  <!-- 服務項目 -->
   <section id="services" class="max-w-6xl mx-auto px-4 py-12 reveal">
     <h2 class="text-2xl md:text-3xl font-bold mb-6">服務項目</h2>
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -315,22 +252,14 @@
     </div>
   </section>
 
-  <!-- =========================
-       透明價格（表格）
-       ========================= -->
+  <!-- 透明價格 -->
   <section id="pricing" class="bg-slate-50 reveal">
     <div class="max-w-6xl mx-auto px-4 py-12">
       <h2 class="text-2xl md:text-3xl font-bold mb-6">透明價格</h2>
       <div class="overflow-x-auto">
         <table class="w-full text-left text-sm">
-          <thead>
-            <tr class="border-b">
-              <th class="py-3">項目</th>
-              <th>基本價格</th>
-              <th>加購/加價</th>
-              <th>備註</th>
-            </tr>
-          </thead>
+          <thead><tr class="border-b">
+            <th class="py-3">項目</th><th>基本價格</th><th>加購/加價</th><th>備註</th></tr></thead>
           <tbody>
             <tr class="border-b"><td class="py-3">冷氣（分離式/台）</td><td>$○,○○○ 起</td><td>室外機、架高/加層</td><td>含防滴與清潔劑</td></tr>
             <tr class="border-b"><td class="py-3">洗衣機（直立式）</td><td>$○,○○○ 起</td><td>嚴重汙垢加時</td><td>全機拆洗殺菌</td></tr>
@@ -343,102 +272,38 @@
     </div>
   </section>
 
-  <!-- =========================
-       施工流程（左：時間軸 / 右：到府前準備折疊）
-       ========================= -->
+  <!-- 施工流程（含到府前準備折疊） -->
   <section id="process" class="max-w-6xl mx-auto px-4 py-12 reveal">
     <h2 class="text-2xl md:text-3xl font-bold mb-6">施工流程</h2>
     <div class="grid md:grid-cols-2 gap-8">
-      <!-- 左：步驟時間軸（快速理解流程） -->
       <div class="p-5 rounded-2xl border">
         <div class="timeline">
-          <div class="timeline-item">
-            <h3 class="font-semibold">步驟 1｜線上估價與預約</h3>
-            <p class="muted text-sm mt-1">LINE 傳地址、設備照片與樓層，安排時段並確認費用區間。</p>
-          </div>
-          <div class="timeline-item">
-            <h3 class="font-semibold">步驟 2｜到府前防護與檢查</h3>
-            <p class="muted text-sm mt-1">鋪設防滴布、養生膠帶保護；實機測試功能、觀察結霜與溫差。</p>
-          </div>
-          <div class="timeline-item">
-            <h3 class="font-semibold">步驟 3｜拆機與深度清洗</h3>
-            <p class="muted text-sm mt-1">清洗熱交換器、風鼓、導風坡道、濾網與集水盤；環保藥劑不傷材。</p>
-          </div>
-          <div class="timeline-item">
-            <h3 class="font-semibold">步驟 4｜組裝回測與漏水檢查</h3>
-            <p class="muted text-sm mt-1">恢復裝機、運轉測試、檢查異音/滴水，確認運作穩定。</p>
-          </div>
-          <div class="timeline-item">
-            <h3 class="font-semibold">步驟 5｜收尾清場與保固說明</h3>
-            <p class="muted text-sm mt-1">現場清潔、提供對照圖與保養貼紙，說明 14 天保固內容。</p>
-          </div>
+          <div class="timeline-item"><h3 class="font-semibold">步驟 1｜線上估價與預約</h3><p class="muted text-sm mt-1">LINE 傳地址、設備照片與樓層，安排時段並確認費用區間。</p></div>
+          <div class="timeline-item"><h3 class="font-semibold">步驟 2｜到府前防護與檢查</h3><p class="muted text-sm mt-1">鋪設防滴布、養生膠帶保護；實機測試功能、觀察結霜與溫差。</p></div>
+          <div class="timeline-item"><h3 class="font-semibold">步驟 3｜拆機與深度清洗</h3><p class="muted text-sm mt-1">清洗熱交換器、風鼓、導風坡道、濾網與集水盤；環保藥劑不傷材。</p></div>
+          <div class="timeline-item"><h3 class="font-semibold">步驟 4｜組裝回測與漏水檢查</h3><p class="muted text-sm mt-1">恢復裝機、運轉測試、檢查異音/滴水，確認運作穩定。</p></div>
+          <div class="timeline-item"><h3 class="font-semibold">步驟 5｜收尾清場與保固說明</h3><p class="muted text-sm mt-1">現場清潔、提供對照圖與保養貼紙，說明 14 天保固內容。</p></div>
         </div>
       </div>
-
-      <!-- 右：到府前準備（折疊區，避免佔版面） -->
       <div class="card">
         <h3 class="card-title">到府前準備</h3>
-
         <details class="faq" open>
           <summary>冷氣施工</summary>
           <div class="faq-content">
-            <p class="card-desc">
-              請提前清出室內機下方空間以便擺放 A 字梯。<br>
-              若下方為大型衣櫃/床/沙發等，將由師傅視情況協助判斷是否可移動。
-            </p>
+            <p class="card-desc">請提前清出室內機下方空間以便擺放 A 字梯；若為大型衣櫃/床/沙發等，師傅將視情況協助判斷是否可移動。</p>
           </div>
         </details>
-
-        <details class="faq">
-          <summary>直立式洗衣機施工</summary>
-          <div class="faq-content">
-            <ul class="card-list">
-              <li>請先清空內桶與上蓋置物，避免震動掉落。</li>
-              <li>周邊預留操作空間；狹窄陽台/浴室可先拍照提供。</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="faq">
-          <summary>水塔清洗</summary>
-          <div class="faq-content">
-            <ul class="card-list">
-              <li>確認屋頂/機房通道可進出，提供容量與材質。</li>
-              <li>如需停水公告請提前申請；清洗期間建議事先儲水。</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="faq">
-          <summary>自來水管清洗</summary>
-          <div class="faq-content">
-            <ul class="card-list">
-              <li>施工期間接入脈衝設備，請保留廚房/浴室可作業區。</li>
-              <li>若有淨水器/熱水器/軟水機，請先提供型號或告知。</li>
-            </ul>
-          </div>
-        </details>
-
-        <details class="faq">
-          <summary>通用提醒</summary>
-          <div class="faq-content">
-            <ul class="card-list">
-              <li>若需停車證或車位費，請事先告知。</li>
-              <li>請確保施工用電與水源可用；如需搬運請協助預留電梯。</li>
-              <li>幼童/長者/寵物施工時建議暫時隔離。</li>
-            </ul>
-          </div>
-        </details>
+        <details class="faq"><summary>直立式洗衣機施工</summary><div class="faq-content"><ul class="card-list"><li>請先清空內桶與上蓋置物，避免震動掉落。</li><li>狹窄陽台/浴室可先拍照提供，加快評估。</li></ul></div></details>
+        <details class="faq"><summary>水塔清洗</summary><div class="faq-content"><ul class="card-list"><li>確認屋頂/機房通道可進出，提供容量與材質。</li><li>如需停水公告請提前申請；清洗期間建議事先儲水。</li></ul></div></details>
+        <details class="faq"><summary>自來水管清洗</summary><div class="faq-content"><ul class="card-list"><li>施工期間接入脈衝設備，請保留廚房/浴室可作業區。</li><li>若有淨水器/熱水器/軟水機，請先提供型號或告知。</li></ul></div></details>
+        <details class="faq"><summary>通用提醒</summary><div class="faq-content"><ul class="card-list"><li>若需停車證或車位費，請事先告知。</li><li>請確保施工用電與水源可用；如需搬運請協助預留電梯。</li><li>幼童/長者/寵物施工時建議暫時隔離。</li></ul></div></details>
       </div>
     </div>
   </section>
 
-  <!-- =========================
-       冷氣清洗 SOP 與保固（折疊段落）
-       ========================= -->
+  <!-- 冷氣清洗 SOP 與保固 -->
   <section id="ac-sop" class="max-w-6xl mx-auto px-4 py-12 reveal">
     <h2 class="text-2xl md:text-3xl font-bold mb-6">冷氣清洗｜完整 SOP 與保固</h2>
-
     <details class="faq" open>
       <summary>🧾 前置檢查流程（功能／冷媒／運轉／溝通）</summary>
       <div class="faq-content">
@@ -450,7 +315,6 @@
         </ul>
       </div>
     </details>
-
     <details class="faq">
       <summary>🛡 環境防護作業（膠帶保護／圍水區）</summary>
       <div class="faq-content">
@@ -462,7 +326,6 @@
         <p class="card-desc">📌 以上流程為清洗前必要準備，為了安全與品質，絕不省略。</p>
       </div>
     </details>
-
     <details class="faq">
       <summary>🧼 拆機與清洗作業流程（現場掛洗／部位／藥劑）</summary>
       <div class="faq-content">
@@ -477,7 +340,6 @@
         </ul>
       </div>
     </details>
-
     <details class="faq" open>
       <summary>🧹 收尾整理與環境恢復</summary>
       <div class="faq-content">
@@ -490,7 +352,6 @@
         </ul>
       </div>
     </details>
-
     <details class="faq" id="ac-sop-warranty">
       <summary>🛠️ 售後保固說明（14 天）</summary>
       <div class="faq-content">
@@ -504,13 +365,10 @@
     </details>
   </section>
 
-  <!-- =========================
-       省電效益試算（互動計算）
-       ========================= -->
+  <!-- 省電效益試算 -->
   <section id="calculator" class="max-w-6xl mx-auto px-4 py-12 reveal">
     <h2 class="text-2xl md:text-3xl font-bold mb-6">省電效益試算</h2>
     <div class="calc-grid">
-      <!-- 左：輸入參數 -->
       <div class="calc-card">
         <label class="text-sm font-semibold">設備類型</label>
         <select id="device" class="calc-input mt-1">
@@ -518,15 +376,12 @@
           <option value="wm">直立式洗衣機</option>
           <option value="pump">加壓/給水設備</option>
         </select>
-
         <label class="text-sm font-semibold mt-4">每月用電量（kWh）<span class="muted">(清洗前)</span></label>
         <input id="kwh" type="number" min="0" step="1" class="calc-input mt-1" value="180">
         <p class="calc-help">可先估整體用電，再拆到單一設備。</p>
-
         <label class="text-sm font-semibold mt-4">平均電價（$/kWh）</label>
         <input id="rate" type="number" min="0" step="0.1" class="calc-input mt-1" value="3">
         <p class="calc-help">家庭用電約 2.6–5.4 元/kWh（依級距/月份浮動）。</p>
-
         <div class="mt-4">
           <div class="flex items-center justify-between">
             <label class="text-sm font-semibold">預估效率提升（%）</label>
@@ -535,17 +390,13 @@
           <input id="impr" type="range" min="5" max="35" value="15" class="range">
           <p class="calc-help">冷氣常見 10–30%；洗衣機/泵浦約 5–20%。</p>
         </div>
-
         <label class="text-sm font-semibold mt-4">每年使用月份（冷氣旺季可填 4–6）</label>
         <input id="months" type="number" min="1" max="12" class="calc-input mt-1" value="6">
-
         <div class="mt-5 flex flex-wrap gap-2">
           <button id="resetCalc" class="btn btn-ghost">恢復預設</button>
-          <a href="#contact" class="btn btn-success">想更精準？免費估價 →</a>
+          <a href="https://yourdomain.com/booking" class="btn btn-success">想更精準？免費估價 →</a>
         </div>
       </div>
-
-      <!-- 右：結果 KPI -->
       <div class="calc-card">
         <h3 class="font-semibold mb-3">結果預覽</h3>
         <div class="kpi">
@@ -563,23 +414,17 @@
     </div>
   </section>
 
-  <!-- =========================
-       案例見證（簡單三欄）
-       ========================= -->
+  <!-- 案例見證 -->
   <section id="cases" class="max-w-6xl mx-auto px-4 py-12 reveal">
     <h2 class="text-2xl md:text-3xl font-bold mb-6">前後對比與評價</h2>
     <div class="grid md:grid-cols-3 gap-6">
       <img src="before1.jpg" alt="冷氣清洗前" class="rounded-xl border">
       <img src="after1.jpg" alt="冷氣清洗後" class="rounded-xl border">
-      <div class="p-5 rounded-xl border">
-        <p class="text-sm">「服務迅速、沒有濺得到處都是，清洗完冷房效率差很多！」— 王先生（內湖）⭐️⭐️⭐️⭐️⭐️</p>
-      </div>
+      <div class="p-5 rounded-xl border"><p class="text-sm">「服務迅速、沒有濺得到處都是，清洗完冷房效率差很多！」— 王先生（內湖）⭐️⭐️⭐️⭐️⭐️</p></div>
     </div>
   </section>
 
-  <!-- =========================
-       FAQ 常見問題（折疊）
-       ========================= -->
+  <!-- FAQ -->
   <section id="faq" class="bg-slate-50 reveal">
     <div class="max-w-6xl mx-auto px-4 py-12">
       <h2 class="text-2xl md:text-3xl font-bold mb-6">常見問題</h2>
@@ -590,283 +435,93 @@
     </div>
   </section>
 
-  <!-- =========================
-       聯絡 / 預約（含 Google Form 嵌入）
-       ========================= -->
+  <!-- 聯絡 / 預約（外連你的預約頁） -->
   <section id="contact" class="max-w-6xl mx-auto px-4 py-12 reveal">
     <h2 class="text-2xl md:text-3xl font-bold mb-6">聯絡 / 預約</h2>
     <div class="grid md:grid-cols-2 gap-6 items-start">
       <div class="p-5 rounded-2xl border">
-        <h3 class="font-bold">快速通道</h3>
+        <h3 class="card-title">快速通道</h3>
         <ul class="mt-3 text-sm">
           <li>電話：<a href="tel:+8869xxxxxxxx" class="text-sky-700 underline">+886 9xx-xxx-xxx</a></li>
           <li>LINE：<a href="https://line.me/R/ti/p/@你的ID" class="text-sky-700 underline">@你的ID</a></li>
           <li>服務時間：週一至週六 09:00–20:00</li>
         </ul>
+        <a href="https://yourdomain.com/booking" class="btn btn-success mt-4 w-full">立即線上預約</a>
       </div>
-      <!-- 請更換為你的 Google 表單 ID -->
-      <iframe src="https://docs.google.com/forms/d/e/你的表單ID/viewform?embedded=true" width="100%" height="520" frameborder="0">載入中…</iframe>
+      <div class="p-5 rounded-2xl border">
+        <h3 class="font-bold">服務資訊</h3>
+        <ul class="mt-3 text-sm">
+          <li>服務範圍：台北・新北・基隆（其他地區請私訊）</li>
+          <li>可附照片估價／可開立發票／14 天售後保固</li>
+          <li>施工前請確保水電正常供應，並協助保留必要空間</li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <!-- =========================
-       Footer 版權資訊
-       ========================= -->
+  <!-- Footer -->
   <footer class="bg-white border-t">
     <div class="max-w-6xl mx-auto px-4 py-8 text-sm muted">© <span id="year"></span> ○○清潔｜統編：XXXXXXXX</div>
   </footer>
 
-  <!-- =========================
-       行動版浮動快速按鈕（電話 / LINE）
-       - 位置已配合主題切換鈕避讓
-       ========================= -->
+  <!-- 行動版浮動快速按鈕（電話 / LINE） -->
   <div class="fixed bottom-4 right-4 flex flex-col gap-2 md:hidden mobile-fab">
     <a href="tel:+8869xxxxxxxx" class="btn btn-ghost">撥打電話</a>
     <a href="https://line.me/R/ti/p/@你的ID" class="btn btn-primary">LINE 諮詢</a>
   </div>
 
-  <!-- =========================
-       深/淺色切換（可拖曳，行動/桌機皆可）
-       - 點一下：切換主題
-       - 按住拖曳：移動位置（自動記憶）
-       ========================= -->
+  <!-- 深/淺色切換（可拖曳） -->
   <button id="themeToggle" class="theme-toggle" aria-label="切換深淺色" aria-pressed="false">🌙</button>
 
   <script>
-    /* === Footer 年份（自動更新到今年） === */
+    /* 年份自動更新 */
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    /* =====================================================
-       主題（深/淺色）處理
-       - 優先使用使用者手動選擇（localStorage: theme-pref）
-       - 若無手動，則以系統偏好為準（prefers-color-scheme）
-       - 手動切換後會寫入 localStorage 並更新按鈕圖示
-       ===================================================== */
-    const root=document.body, toggleBtn=document.getElementById('themeToggle');
-    const KEY='theme-pref'; // 儲存使用者選擇的鍵名
-
-    // 依目前狀態切換按鈕圖示（🌙=目前是淺色、可切深色；🌞=目前是深色、可切淺色）
-    function setIcon(){
-      const isDark = root.classList.contains('dark');
-      toggleBtn.textContent = isDark ? '🌞' : '🌙';
-      toggleBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
-    }
-
-    // 初始化主題：先看 localStorage，沒有就看系統設定
+    /* ========= 主題（深/淺色）處理 ========= */
+    const root=document.body, toggleBtn=document.getElementById('themeToggle'); const KEY='theme-pref';
+    function setIcon(){ const isDark=root.classList.contains('dark'); toggleBtn.textContent=isDark?'🌞':'🌙'; toggleBtn.setAttribute('aria-pressed', isDark ? 'true' : 'false'); }
     function applyInitialTheme(){
       const saved=localStorage.getItem(KEY);
-      if(saved==='dark'||saved==='light'){
-        root.classList.toggle('dark',saved==='dark');
-        root.classList.toggle('light',saved==='light');
-        setIcon();
-        return;
-      }
+      if(saved==='dark'||saved==='light'){ root.classList.toggle('dark',saved==='dark'); root.classList.toggle('light',saved==='light'); setIcon(); return; }
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      root.classList.toggle('dark',prefersDark);
-      root.classList.toggle('light',!prefersDark);
-      setIcon();
+      root.classList.toggle('dark',prefersDark); root.classList.toggle('light',!prefersDark); setIcon();
     }
     applyInitialTheme();
-
-    // 若使用者沒有手動設定，系統偏好改變時同步切換
     const mq=window.matchMedia('(prefers-color-scheme: dark)');
     if(mq.addEventListener){
-      mq.addEventListener('change', e=>{
-        if(localStorage.getItem(KEY)) return; // 已手動設定就不覆蓋
-        root.classList.toggle('dark',e.matches);
-        root.classList.toggle('light',!e.matches);
-        setIcon();
-      });
+      mq.addEventListener('change', e=>{ if(localStorage.getItem(KEY)) return; root.classList.toggle('dark',e.matches); root.classList.toggle('light',!e.matches); setIcon(); });
     }
+    function toggleTheme(){ const nowDark=root.classList.contains('dark'); root.classList.toggle('dark',!nowDark); root.classList.toggle('light',nowDark); localStorage.setItem(KEY, nowDark ? 'light' : 'dark'); setIcon(); }
 
-    // 點擊切換深/淺色，並記住選擇
-    function toggleTheme(){
-      const nowDark = root.classList.contains('dark');
-      root.classList.toggle('dark', !nowDark);
-      root.classList.toggle('light', nowDark);
-      localStorage.setItem(KEY, nowDark ? 'light' : 'dark');
-      setIcon();
-    }
-
-    /* =====================================================
-       區塊：滾動進場動畫（IntersectionObserver）
-       - 進入視窗一定比例後加上 .visible
-       - 只觸發一次（觸發後取消 observe）
-       ===================================================== */
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      })
-    }, {threshold:0.12}); // 12% 顯示就觸發
+    /* ========= 滾動進場動畫 ========= */
+    const observer = new IntersectionObserver((entries)=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.classList.add('visible'); observer.unobserve(entry.target); } }) }, {threshold:0.12});
     document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-    /* =====================================================
-       省電效益試算（簡化模型）
-       - device: 預設不同效率提升與使用月份
-       - 輸入 kwh / rate / impr / months 計算每月與年度節省
-       ===================================================== */
-    const els={
-      device:document.getElementById('device'),
-      kwh:document.getElementById('kwh'),
-      rate:document.getElementById('rate'),
-      impr:document.getElementById('impr'),
-      imprLabel:document.getElementById('imprLabel'),
-      months:document.getElementById('months'),
-      saveKwhM:document.getElementById('saveKwhM'),
-      saveNTDM:document.getElementById('saveNTDM'),
-      saveKwhY:document.getElementById('saveKwhY'),
-      saveNTDY:document.getElementById('saveNTDY'),
-      costBeforeM:document.getElementById('costBeforeM'),
-      costAfterM:document.getElementById('costAfterM'),
-      reset:document.getElementById('resetCalc')
-    };
-    const defaults={ac:{impr:15,months:6},wm:{impr:10,months:12},pump:{impr:8,months:12}}; // 預設值（% 與 月數）
-
-    // 格式化顯示
+    /* ========= 省電試算器 ========= */
+    const els={device:document.getElementById('device'),kwh:document.getElementById('kwh'),rate:document.getElementById('rate'),impr:document.getElementById('impr'),imprLabel:document.getElementById('imprLabel'),months:document.getElementById('months'),saveKwhM:document.getElementById('saveKwhM'),saveNTDM:document.getElementById('saveNTDM'),saveKwhY:document.getElementById('saveKwhY'),saveNTDY:document.getElementById('saveNTDY'),costBeforeM:document.getElementById('costBeforeM'),costAfterM:document.getElementById('costAfterM'),reset:document.getElementById('resetCalc')};
+    const defaults={ac:{impr:15,months:6},wm:{impr:10,months:12},pump:{impr:8,months:12}};
     function fmtCurrency(n){return isNaN(n)?'—':'NT$ '+n.toLocaleString('zh-TW',{maximumFractionDigits:0})}
     function fmtKwh(n){return isNaN(n)?'—':n.toLocaleString('zh-TW',{maximumFractionDigits:0})+' kWh'}
-
-    // 重新計算
-    function recalc(){
-      const kwh=Math.max(0,parseFloat(els.kwh?.value||'0'));
-      const rate=Math.max(0,parseFloat(els.rate?.value||'0'));
-      const impr=Math.max(0,parseFloat(els.impr?.value||'0'))/100;
-      const months=Math.min(12,Math.max(1,parseInt(els.months?.value||'1',10)));
-
-      if(els.imprLabel) els.imprLabel.textContent=Math.round(impr*100)+'%';
-
-      const saveKwhM = kwh * impr;        // 每月省下 kWh
-      const saveNTDM = saveKwhM * rate;    // 每月省下 NT$
-      const saveKwhY = saveKwhM * months;  // 年省 kWh
-      const saveNTDY = saveNTDM * months;  // 年省 NT$
-      const costBefore = kwh * rate;       // 清洗前每月電費
-      const costAfter = (kwh - saveKwhM) * rate; // 清洗後每月電費
-
-      els.saveKwhM.textContent=fmtKwh(saveKwhM);
-      els.saveNTDM.textContent=fmtCurrency(saveNTDM);
-      els.saveKwhY.textContent=fmtKwh(saveKwhY);
-      els.saveNTDY.textContent=fmtCurrency(saveNTDY);
-      els.costBeforeM.textContent=fmtCurrency(costBefore);
-      els.costAfterM.textContent=fmtCurrency(costAfter);
-    }
-
-    // 依設備套用預設提升幅度/月份
-    function applyPreset(){
-      const d=els.device?.value||'ac';
-      const p=defaults[d]||defaults.ac;
-      if(els.impr) els.impr.value=p.impr;
-      if(els.months) els.months.value=p.months;
-      if(els.imprLabel) els.imprLabel.textContent=p.impr+'%';
-      recalc();
-    }
-
-    // 綁定事件
-    ['input','change'].forEach(ev=>{
-      els.kwh?.addEventListener(ev,recalc);
-      els.rate?.addEventListener(ev,recalc);
-      els.impr?.addEventListener(ev,recalc);
-      els.months?.addEventListener(ev,recalc);
-      els.device?.addEventListener(ev,applyPreset);
-    });
-    els.reset?.addEventListener('click',()=>{
-      if(els.device) els.device.value='ac';
-      if(els.kwh) els.kwh.value=180;
-      if(els.rate) els.rate.value=3;
-      applyPreset();
-    });
-    // 初次套用
+    function recalc(){const kwh=Math.max(0,parseFloat(els.kwh?.value||'0')),rate=Math.max(0,parseFloat(els.rate?.value||'0')),impr=Math.max(0,parseFloat(els.impr?.value||'0'))/100,months=Math.min(12,Math.max(1,parseInt(els.months?.value||'1',10))); if(els.imprLabel)els.imprLabel.textContent=Math.round(impr*100)+'%'; const saveKwhM=kwh*impr, saveNTDM=saveKwhM*rate, saveKwhY=saveKwhM*months, saveNTDY=saveNTDM*months, costBefore=kwh*rate, costAfter=(kwh-saveKwhM)*rate; els.saveKwhM.textContent=fmtKwh(saveKwhM);els.saveNTDM.textContent=fmtCurrency(saveNTDM);els.saveKwhY.textContent=fmtKwh(saveKwhY);els.saveNTDY.textContent=fmtCurrency(saveNTDY);els.costBeforeM.textContent=fmtCurrency(costBefore);els.costAfterM.textContent=fmtCurrency(costAfter);}
+    function applyPreset(){const d=els.device?.value||'ac',p=defaults[d]||defaults.ac; if(els.impr)els.impr.value=p.impr;if(els.months)els.months.value=p.months;if(els.imprLabel)els.imprLabel.textContent=p.impr+'%'; recalc();}
+    ['input','change'].forEach(ev=>{els.kwh?.addEventListener(ev,recalc);els.rate?.addEventListener(ev,recalc);els.impr?.addEventListener(ev,recalc);els.months?.addEventListener(ev,recalc);els.device?.addEventListener(ev,applyPreset);});
+    els.reset?.addEventListener('click',()=>{if(els.device)els.device.value='ac';if(els.kwh)els.kwh.value=180;if(els.rate)els.rate.value=3;applyPreset();});
     applyPreset();recalc();
 
-    /* =====================================================
-       主題切換按鈕：可拖曳 + 點擊
-       - Pointer Events 統一 mouse/touch
-       - 當移動距離 < 門檻，視為點擊 → 切換主題
-       - 位置會存到 localStorage，下次載入維持
-       ===================================================== */
+    /* ========= 主題切換按鈕：可拖曳 + 點擊 ========= */
     (()=>{
-      const btn = document.getElementById('themeToggle');
-      const KEY_POS = 'theme-toggle-pos'; // 記錄浮動鈕位置
-      const THRESHOLD = 6;                // 小於此像素差視為點擊
-
-      // 工具：夾住範圍（避免拖出畫面）
+      const btn = document.getElementById('themeToggle'); const KEY_POS = 'theme-toggle-pos'; const THRESHOLD = 6;
       function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
-
-      // 預設位置（行動與桌機不同）
-      function defPos(){
-        const m = window.matchMedia('(max-width: 767.98px)').matches;
-        return m ? {x:16, y: window.innerHeight - 140}
-                 : {x: window.innerWidth - 64, y: window.innerHeight - 120};
-      }
-
-      // 套用定位（以 left/top 絕對座標）
-      function applyPos(p){
-        btn.style.left=p.x+'px';
-        btn.style.top=p.y+'px';
-        btn.style.right='auto';
-        btn.style.bottom='auto';
-      }
-
-      // 讀取已記錄位置（若無則回預設）
-      function loadPos(){
-        try{
-          const s=localStorage.getItem(KEY_POS);
-          if(s){
-            const p=JSON.parse(s);
-            return {x:clamp(p.x,8,window.innerWidth-56), y:clamp(p.y,8,window.innerHeight-56)};
-          }
-        }catch(e){}
-        return defPos();
-      }
-
-      // 儲存位置
+      function defPos(){ const m = window.matchMedia('(max-width: 767.98px)').matches; return m ? {x:16, y: window.innerHeight - 140} : {x: window.innerWidth - 64, y: window.innerHeight - 120}; }
+      function applyPos(p){ btn.style.left=p.x+'px'; btn.style.top=p.y+'px'; btn.style.right='auto'; btn.style.bottom='auto'; }
+      function loadPos(){ try{const s=localStorage.getItem(KEY_POS); if(s){const p=JSON.parse(s); return {x:clamp(p.x,8,window.innerWidth-56), y:clamp(p.y,8,window.innerHeight-56)};}}catch(e){} return defPos(); }
       function savePos(p){ localStorage.setItem(KEY_POS, JSON.stringify(p)); }
-
-      // 初始化位置
       let pos = loadPos(); applyPos(pos);
-
-      // 拖曳狀態
       let dragging=false, moved=false, startX=0, startY=0, origin={x:0,y:0};
-
-      // Pointerdown：開始可能的拖曳
-      btn.addEventListener('pointerdown', (e)=>{
-        btn.setPointerCapture(e.pointerId);
-        dragging=true; moved=false;
-        startX=e.clientX; startY=e.clientY;
-        const r=btn.getBoundingClientRect(); origin={x:r.left,y:r.top};
-        e.preventDefault();
-      });
-
-      // Pointermove：超過門檻才算拖曳，並即時更新位置
-      btn.addEventListener('pointermove', (e)=>{
-        if(!dragging) return;
-        const dx=e.clientX-startX, dy=e.clientY-startY;
-        if(Math.abs(dx)>THRESHOLD || Math.abs(dy)>THRESHOLD) moved=true;
-        if(!moved) return;
-        const nx=clamp(origin.x+dx,8,window.innerWidth-56);
-        const ny=clamp(origin.y+dy,8,window.innerHeight-56);
-        applyPos({x:nx,y:ny});
-      });
-
-      // Pointerup：若有移動就存位；否則視為點擊→切換主題
-      btn.addEventListener('pointerup', (e)=>{
-        if(!dragging) return;
-        dragging=false; btn.releasePointerCapture(e.pointerId);
-        if(moved){
-          const r=btn.getBoundingClientRect(); savePos({x:r.left,y:r.top});
-        }else{
-          toggleTheme(); // 點擊切換
-        }
-      });
-
-      // 視窗縮放：把位置夾回可視範圍並存檔
-      window.addEventListener('resize', ()=>{
-        const r=btn.getBoundingClientRect();
-        const p={x:clamp(r.left,8,window.innerWidth-56), y:clamp(r.top,8,window.innerHeight-56)};
-        applyPos(p); savePos(p);
-      });
+      btn.addEventListener('pointerdown', (e)=>{ btn.setPointerCapture(e.pointerId); dragging=true; moved=false; startX=e.clientX; startY=e.clientY; const r=btn.getBoundingClientRect(); origin={x:r.left,y:r.top}; e.preventDefault(); });
+      btn.addEventListener('pointermove', (e)=>{ if(!dragging) return; const dx=e.clientX-startX, dy=e.clientY-startY; if(Math.abs(dx)>THRESHOLD || Math.abs(dy)>THRESHOLD) moved=true; if(!moved) return; const nx=clamp(origin.x+dx,8,window.innerWidth-56); const ny=clamp(origin.y+dy,8,window.innerHeight-56); applyPos({x:nx,y:ny}); });
+      btn.addEventListener('pointerup', (e)=>{ if(!dragging) return; dragging=false; btn.releasePointerCapture(e.pointerId); if(moved){ const r=btn.getBoundingClientRect(); savePos({x:r.left,y:r.top}); }else{ toggleTheme(); } });
+      window.addEventListener('resize', ()=>{ const r=btn.getBoundingClientRect(); const p={x:clamp(r.left,8,window.innerWidth-56), y:clamp(r.top,8,window.innerHeight-56)}; applyPos(p); savePos(p); });
     })();
   </script>
 </body>
