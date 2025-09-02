@@ -20,33 +20,28 @@
     :root{--bg:#fff;--text:#0f172a;--muted:#475569;--card:#fff;--border:#e2e8f0;--primary:#06C755;--primary-hover:#04b34c;--accent:#3b7d2b}
     @media (prefers-color-scheme: dark){:root{--bg:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--card:#0f172a;--border:#1f2937;--accent:#fbbf24}}
     body{background:var(--bg);color:var(--text)} .muted{color:var(--muted)}
-    header,footer{background:var(--card)}
     .card{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:1.25rem}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:.7rem 1.1rem;border-radius:.75rem;font-weight:700;transition:background-color .2s ease,box-shadow .2s ease}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:.7rem 1.1rem;border-radius:.75rem;font-weight:700;transition:background-color .2s ease}
     .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-hover)}
     .btn-outline{border:1px solid var(--border);color:var(--text)}
     .toc a{padding:.5rem .75rem;border:1px solid var(--border);border-radius:.6rem;transition:background-color .2s ease}
     .toc a:hover{background:var(--primary);color:#fff}
-    table{width:100%;text-align:left;border-collapse:collapse}
-    thead th{font-weight:800;border-bottom:1px solid var(--border);padding:.75rem .5rem}
-    tbody td{border-bottom:1px solid var(--border);padding:.7rem .5rem}
-  </style>
-  
-  <!-- Theme sync overrides (match index.html) -->
-  <style>
-    /* explicit dark/light classes so this page follows index.html's choice via localStorage */
-    body.dark{ --bg:#0b1220; --text:#e5e7eb; --muted:#94a3b8; --card:#0f172a; --border:#1f2937; --accent:#fbbf24 }
-    body.light{ --bg:#fff; --text:#0f172a; --muted:#475569; --card:#fff; --border:#e2e8f0; --accent:#3b7d2b }
-    body[data-theme]{ background:var(--bg); color:var(--text) }
-    /* dark mode small tweaks */
-    body.dark header{ background:rgba(15,23,42,.92) }
-    body.dark footer{ background:#0f172a; border-color:#334155 }
-    body.dark .muted{ color:#94a3b8 }
-    body.dark table thead th{ border-color:#334155 }
-    body.dark table tbody td{ border-color:#334155 }
+    .price th{font-weight:800}
+    header,footer{background:var(--card)}
+    body.dark header{background:rgba(15,23,42,.92);border-color:#334155}
+    body.dark footer{background:#0f172a;border-color:#334155}
+
+    /* 浮動按鈕（返回頂部 + 我要預約） */
+    .fab{position:fixed;right:1rem;z-index:60;display:flex;align-items:center;justify-content:center;border-radius:9999px;
+         box-shadow:0 8px 24px rgba(0,0,0,.22);cursor:pointer;transition:transform .2s ease,opacity .3s ease,box-shadow .2s ease}
+    .fab:hover{transform:translateY(-1px) scale(1.05);box-shadow:0 12px 28px rgba(0,0,0,.28)}
+    .fab.is-hidden{opacity:0;pointer-events:none}
+    .fab-top{bottom:calc(5rem + env(safe-area-inset-bottom,0px));width:48px;height:48px;background:#0ea5e9;color:#fff;font-size:1.25rem}
+    .fab-book{bottom:calc(1rem + env(safe-area-inset-bottom,0px));min-width:48px;height:48px;padding:0 1.1rem;background:var(--primary);color:#fff;font-weight:800}
+    @media (max-width:767.98px){ .fab-top{bottom:calc(5.5rem + env(safe-area-inset-bottom,0px))} }
   </style>
 </head>
-<body data-theme>
+<body id="top">
   <!-- Header -->
   <header class="sticky top-0 z-50 backdrop-blur border-b">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -75,153 +70,206 @@
     </ol>
   </nav>
 
-  <!-- 內頁標題 + 快速導覽 -->
-  <section class="max-w-6xl mx-auto px-4 py-2">
-    <h1 class="text-3xl font-extrabold">服務與價格細項</h1>
-    <p class="mt-2 text-slate-600 text-sm">以下為四大服務的價格區間、常見加價項目與備註，實際金額仍以現場機況評估為準。</p>
-    <div class="toc mt-4 flex flex-wrap gap-2 text-sm">
-      <a href="#ac">冷氣清洗</a>
-      <a href="#wm">直立式洗衣機</a>
-      <a href="#tank">水塔清洗</a>
-      <a href="#pipe">自來水管清洗</a>
+  <!-- 頁首說明 -->
+  <section class="max-w-6xl mx-auto px-4 pb-4">
+    <h1 class="text-3xl md:text-4xl font-extrabold">服務與價格細項</h1>
+    <p class="mt-2 text-slate-600">以下為各服務的基本價格、加價條件與作業內容。若有型號/位置特殊，請
+      <a href="https://line.me/R/ti/p/@uncle888" class="underline text-sky-700">LINE 傳照片</a>快速估價。</p>
+  </section>
+
+  <!-- 目錄 -->
+  <section class="max-w-6xl mx-auto px-4 py-4">
+    <div class="toc grid grid-cols-2 md:grid-cols-4 gap-3">
+      <a href="#ac" class="text-center">冷氣清洗</a>
+      <a href="#wm" class="text-center">直立式洗衣機</a>
+      <a href="#tank" class="text-center">水塔清洗</a>
+      <a href="#pipe" class="text-center">自來水管清洗</a>
     </div>
   </section>
 
   <!-- 冷氣清洗 -->
   <section id="ac" class="max-w-6xl mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold mb-4">冷氣清洗</h2>
-    <table class="text-sm">
-      <thead>
-        <tr><th>類型/坪數</th><th>價格</th><th>加價項目</th><th>包含內容</th><th>備註</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>分離式 1–2 坪</td><td>NT$1,800</td><td>加大/加長款另計</td><td>鰭片、風鼓、濾網、集水盤、排水疏通</td><td>含防滴、防護與環保清潔劑</td></tr>
-        <tr><td>分離式 3–5 坪</td><td>NT$2,200</td><td>特殊機款另議</td><td>同上＋面板/導風道清潔</td><td>作業約 60 分鐘/台</td></tr>
-        <tr><td>窗型</td><td>NT$1,200 起</td><td>需移機另計</td><td>基本除塵、鰭片與風輪清洗</td><td>現場掛洗、不拆室內銅管</td></tr>
-      </tbody>
-    </table>
-    <p class="mt-2 text-xs text-slate-500">📌 若檢測到冷媒不足、安裝不良等問題，將先溝通風險與處置建議。</p>
+    <div class="card p-6">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-extrabold">冷氣清洗</h2>
+          <p class="mt-1 muted">分離式/窗型，現場掛洗。含防滴與環保清潔劑。</p>
+        </div>
+        <!-- 移除：這個服務我要預約 按鈕 -->
+      </div>
+      <div class="overflow-x-auto mt-5">
+        <table class="price w-full text-left text-sm">
+          <thead>
+            <tr class="border-b"><th class="py-3">機型/條件</th><th>基本價格（含稅）</th><th>加價情形</th><th>備註</th></tr>
+          </thead>
+          <tbody>
+            <tr class="border-b"><td class="py-3">分離式（標準尺寸）/台</td><td>NT$ 1,800 起</td><td>加大加長、變頻旗艦、難施工</td><td>含防滴、清潔劑、前後照</td></tr>
+            <tr class="border-b"><td class="py-3">窗型（標準尺寸）/台</td><td>NT$ 1,500 起</td><td>嵌入式、過深位置</td><td>不拆室內管線</td></tr>
+            <tr><td class="py-3">室外機</td><td>NT$ 800 起</td><td>高樓外牆需另估</td><td>安全優先</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <details class="mt-4">
+        <summary class="font-semibold cursor-pointer">加價與不承作情形</summary>
+        <ul class="list-disc pl-6 mt-2 text-sm text-slate-600">
+          <li>高空/需吊掛作業（另估）。</li>
+          <li>面板/外殼斷裂、卡扣缺失，清洗前會先告知風險。</li>
+          <li>冷媒不足、安裝不良屬冷凍空調範疇，建議先處理後再清洗。</li>
+        </ul>
+      </details>
+    </div>
   </section>
 
   <!-- 直立式洗衣機 -->
   <section id="wm" class="max-w-6xl mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold mb-4">直立式洗衣機清洗</h2>
-    <table class="text-sm">
-      <thead>
-        <tr><th>容量</th><th>價格</th><th>加價項目</th><th>包含內容</th><th>備註</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>10 公斤以下</td><td>NT$2,000</td><td>—</td><td>全機拆洗、內外桶除黴、軸心/皮帶區去垢</td><td>還原洗淨力、異味改善</td></tr>
-        <tr><td>11–15 公斤</td><td>NT$2,500</td><td>—</td><td>同上＋注水/排水系統檢查</td><td>狹窄空間施工需先提供照片</td></tr>
-      </tbody>
-    </table>
+    <div class="card p-6">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-extrabold">直立式洗衣機清洗</h2>
+          <p class="mt-1 muted">全機拆洗除黴水垢，還原洗淨力。</p>
+        </div>
+        <!-- 移除：這個服務我要預約 按鈕 -->
+      </div>
+      <div class="overflow-x-auto mt-5">
+        <table class="price w-full text-left text-sm">
+          <thead>
+            <tr class="border-b"><th class="py-3">容量/條件</th><th>基本價格（含稅）</th><th>加價情形</th><th>備註</th></tr>
+          </thead>
+          <tbody>
+            <tr class="border-b"><td class="py-3">一般 10–14kg</td><td>NT$ 2,000 起</td><td>生鏽/卡死螺帽需工時</td><td>含拆桶、除黴</td></tr>
+            <tr><td class="py-3">大容量 15kg 以上</td><td>NT$ 2,500 起</td><td>陽台狹窄、無排水需另備</td><td>現場安全評估</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <details class="mt-4">
+        <summary class="font-semibold cursor-pointer">注意與限制</summary>
+        <ul class="list-disc pl-6 mt-2 text-sm text-slate-600">
+          <li>滾筒式不在此服務；可來訊評估是否承作。</li>
+          <li>機齡過高塑料脆化，拆裝風險會先說明。</li>
+        </ul>
+      </details>
+    </div>
   </section>
 
   <!-- 水塔清洗 -->
   <section id="tank" class="max-w-6xl mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold mb-4">水塔清洗</h2>
-    <table class="text-sm">
-      <thead>
-        <tr><th>容量</th><th>價格</th><th>加價項目</th><th>包含內容</th><th>備註</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>≤ 1 噸</td><td>NT$1,000</td><td>大容量另計</td><td>排空、刷洗、沖洗、消毒</td><td>施工前後提供照片存證</td></tr>
-        <tr><td>1–3 噸</td><td>NT$1,500</td><td>特殊材質另議</td><td>同上</td><td>必要時協助停水公告</td></tr>
-      </tbody>
-    </table>
+    <div class="card p-6">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-extrabold">水塔清洗</h2>
+          <p class="mt-1 muted">排空、刷洗、沖淨，附清洗照片存證。</p>
+        </div>
+        <!-- 移除：這個服務我要預約 按鈕 -->
+      </div>
+      <div class="overflow-x-auto mt-5">
+        <table class="price w-full text-left text-sm">
+          <thead>
+            <tr class="border-b"><th class="py-3">容量/材質</th><th>基本價格（含稅）</th><th>加價情形</th><th>備註</th></tr>
+          </thead>
+          <tbody>
+            <tr class="border-b"><td class="py-3">家用 ≤1噸</td><td>NT$ 1,000 起</td><td>高樓層/狹窄機房</td><td>含出入動線清潔</td></tr>
+            <tr><td class="py-3">1–3 噸</td><td>NT$ 1,800 起</td><td>特殊材質需客製工具</td><td>需可用水源/排水</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <details class="mt-4">
+        <summary class="font-semibold cursor-pointer">注意與限制</summary>
+        <ul class="list-disc pl-6 mt-2 text-sm text-slate-600">
+          <li>如需社區停水公告，請屋主/管委會提前申請。</li>
+          <li>清洗期間建議事先儲水，避免無水可用。</li>
+        </ul>
+      </details>
+    </div>
   </section>
 
   <!-- 自來水管清洗 -->
   <section id="pipe" class="max-w-6xl mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold mb-4">自來水管清洗</h2>
-    <table class="text-sm">
-      <thead>
-        <tr><th>戶型</th><th>價格</th><th>加價項目</th><th>包含內容</th><th>備註</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>一般家庭</td><td>NT$3,200 起</td><td>多重管線另計</td><td>脈衝清洗、鏽垢排出</td><td>改善黃水/水壓不穩</td></tr>
-        <tr><td>大坪數/商用</td><td>NT$4,500 起</td><td>複雜管線另議</td><td>同上＋重點管路加強</td><td>視現場增派人手</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <!-- 注意與限制 / 保固 / 發票資訊 -->
-  <section class="max-w-6xl mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold mb-4">注意與限制</h2>
-    <ul class="list-disc pl-5 text-sm space-y-2 text-slate-700">
-      <li>若需停車證或車位費，請事先告知。</li>
-      <li>請確保施工用電與水源可用；如需搬運請協助預留電梯。</li>
-      <li>幼童/長者/寵物施工時建議暫時隔離。</li>
-    </ul>
-
-    <h2 class="text-2xl font-bold mt-8 mb-4">售後保固與發票</h2>
-    <ul class="list-disc pl-5 text-sm space-y-2 text-slate-700">
-      <li>清洗完成起 14 天保固，若出現漏水或使用異常等清洗相關問題，專人到府處理。</li>
-      <li>原本安裝不良、機件老舊/破裂/鏽蝕/耗損等非清洗因素不在保固範圍。</li>
-      <li>可開立合法統一發票。</li>
-    </ul>
-  </section>
-
-  <!-- CTA -->
-  <section class="bg-slate-50 py-12 text-center">
-    <h2 class="text-2xl font-bold mb-4">需要更精準報價？</h2>
-    <p class="text-slate-600 mb-6 text-sm">傳 LINE 照片或立即線上預約，專人快速回覆</p>
-    <div class="flex flex-col sm:flex-row gap-3 justify-center">
-      <a href="https://line.me/R/ti/p/@uncle888" class="btn btn-primary">LINE 諮詢</a>
-      <a href="https://yourdomain.com/booking" class="btn btn-outline">立即線上預約</a>
-      <a href="index.html#pricing" class="btn btn-outline">返回首頁價格表</a>
+    <div class="card p-6">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h2 class="text-2xl font-extrabold">自來水管清洗</h2>
+          <p class="mt-1 muted">脈衝清洗去除鏽垢，改善黃水/水壓不穩。</p>
+        </div>
+        <!-- 移除：這個服務我要預約 按鈕 -->
+      </div>
+      <div class="overflow-x-auto mt-5">
+        <table class="price w-full text-left text-sm">
+          <thead>
+            <tr class="border-b"><th class="py-3">住家型態</th><th>基本價格（含稅）</th><th>加價情形</th><th>備註</th></tr>
+          </thead>
+          <tbody>
+            <tr class="border-b"><td class="py-3">套房/小坪數（單迴路）</td><td>NT$ 3,200 起</td><td>多重管線、老舊管材</td><td>含基本檢測</td></tr>
+            <tr><td class="py-3">家庭（2 衛以上）</td><td>NT$ 4,500 起</td><td>加壓機/淨水設備需額外處理</td><td>現場評估</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <details class="mt-4">
+        <summary class="font-semibold cursor-pointer">注意與限制</summary>
+        <ul class="list-disc pl-6 mt-2 text-sm text-slate-600">
+          <li>施工期間需可接入設備，請預留廚房/浴室作業空間。</li>
+          <li>若有熱水器/軟水機/淨水器，將暫時關閉進出水與電源。</li>
+        </ul>
+      </details>
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- 通用說明/保固/發票 -->
+  <section class="max-w-6xl mx-auto px-4 py-8">
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="card p-6">
+        <h3 class="text-xl font-bold">售後保固</h3>
+        <p class="mt-2 text-sm text-slate-600">清洗完成起 <strong>14 天</strong>。漏水、使用異常等清洗關聯問題，專人到府處理至正常。原本安裝不良、機件老舊/破裂/鏽蝕/耗損等非清洗因素不在範圍。</p>
+      </div>
+      <div class="card p-6">
+        <h3 class="text-xl font-bold">收費與發票</h3>
+        <p class="mt-2 text-sm text-slate-600">現金/轉帳/行動支付皆可，<strong>可開立發票</strong>。若需停車費或管制證，請事先告知。</p>
+      </div>
+      <div class="card p-6">
+        <h3 class="text-xl font-bold">到府前準備</h3>
+        <ul class="mt-2 list-disc pl-6 text-sm text-slate-600">
+          <li>確保施工用電與水源可用；必要時預留電梯。</li>
+          <li>冷氣施工請清出室內機下方 1–1.5m 空間以便 A 字梯。</li>
+          <li>狹窄陽台/浴室可先拍照提供，加快評估。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-slate-50 border-t">
+    <div class="max-w-6xl mx-auto px-4 py-10 text-center">
+      <h2 class="text-2xl md:text-3xl font-extrabold">已看過價格了嗎？</h2>
+      <p class="mt-2 muted">可先 LINE 傳照片更精準，或直接預約指定時段。</p>
+      <div class="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a href="https://line.me/R/ti/p/@uncle888" class="btn btn-primary">LINE 快速估價</a>
+        <a href="https://yourdomain.com/booking" class="btn btn-outline">線上預約</a>
+        <a href="index.html#pricing" class="btn btn-outline" aria-label="回到首頁的價格表位置">返回首頁價格表</a>
+      </div>
+    </div>
+  </section>
+
   <footer class="border-t">
     <div class="max-w-6xl mx-auto px-4 py-8 text-sm text-slate-500">© <span id="year"></span> 自然大叔 Natural Uncle｜統編：88537528</div>
   </footer>
 
+  <!-- 浮動按鈕：返回頂部 + 我要預約 -->
+  <a href="#top" id="backTop" class="fab fab-top is-hidden" aria-label="返回頂部" title="返回頂部">↑</a>
+  <a href="https://yourdomain.com/booking" class="fab fab-book" aria-label="我要預約" title="我要預約">我要預約</a>
+
   <script>
+    // 年份
     document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-  
-  <!-- Sync theme with index.html (localStorage 'theme-pref') -->
-  <script>
+
+    // 返回頂部顯示控制
     (function(){
-      const KEY='theme-pref';
-      const root=document.body;
-      function applyInitial(){
-        const saved=localStorage.getItem(KEY);
-        if(saved==='dark'||saved==='light'){
-          root.classList.toggle('dark', saved==='dark');
-          root.classList.toggle('light', saved==='light');
-          return;
-        }
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        root.classList.toggle('dark', prefersDark);
-        root.classList.toggle('light', !prefersDark);
+      const backTop = document.getElementById('backTop');
+      const THRESHOLD = 360;
+      function onScroll(){
+        if (window.scrollY > THRESHOLD) backTop.classList.remove('is-hidden');
+        else backTop.classList.add('is-hidden');
       }
-      applyInitial();
-      // If user changes theme on index.html (or any tab), keep this page in sync
-      window.addEventListener('storage', (e)=>{
-        if(e.key!==KEY) return;
-        const val=e.newValue;
-        if(val==='dark' || val==='light'){
-          root.classList.toggle('dark', val==='dark');
-          root.classList.toggle('light', val==='light');
-        } else {
-          // cleared: fall back to system preference
-          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          root.classList.toggle('dark', prefersDark);
-          root.classList.toggle('light', !prefersDark);
-        }
-      });
-      // Also react to system theme changes if no explicit preference is set
-      const mq=window.matchMedia('(prefers-color-scheme: dark)');
-      if(mq.addEventListener){
-        mq.addEventListener('change', (e)=>{
-          if(localStorage.getItem(KEY)) return; // respect explicit choice
-          root.classList.toggle('dark', e.matches);
-          root.classList.toggle('light', !e.matches);
-        });
-      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
     })();
   </script>
 </body>
