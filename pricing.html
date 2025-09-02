@@ -58,7 +58,7 @@
     tbody td{border-bottom:1px solid var(--border);padding:.7rem .5rem}
     body.dark thead th, body.dark tbody td{border-color:#334155}
 
-    /* 浮動按鈕（返回頂部 + 我要預約） */
+    /* 浮動按鈕（返回頂部 + LINE 預約） */
     .fab{position:fixed;right:1rem;z-index:60;display:flex;align-items:center;justify-content:center;border-radius:9999px;
          box-shadow:0 8px 24px rgba(0,0,0,.22);cursor:pointer;transition:transform .2s ease,opacity .3s ease,box-shadow .2s ease}
     .fab:hover{transform:translateY(-1px) scale(1.05);box-shadow:0 12px 28px rgba(0,0,0,.28)}
@@ -81,8 +81,8 @@
     }
     .nav-pill{
       display:inline-flex;align-items:center;gap:.4rem;
-      padding:.45rem .9rem;border-radius:9999px;
-      font-weight:700;font-size:.9rem;
+      padding:.5rem 1rem;border-radius:9999px;
+      font-weight:800;font-size:.9rem;
       transition:background-color .2s ease, transform .15s ease, color .2s ease;
       white-space:nowrap;
     }
@@ -91,28 +91,41 @@
     body.dark .nav-pill:is(:hover,:focus-visible){background:rgba(148,163,184,.15)}
     .nav-active{background:var(--primary);color:#fff}
     .nav-active:hover{background:var(--primary-hover)}
+
+    /* 手機：隱藏水平捲軸樣式 */
+    .no-scrollbar::-webkit-scrollbar{display:none}
+    .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
   </style>
 </head>
 <body id="top" data-theme>
-  <!-- Header（置中導覽，移除預約/線上預約/LINE諮詢） -->
+  <!-- Header（行動裝置兩行設計；桌機置中） -->
   <header class="sticky top-0 z-50 backdrop-blur border-b">
-    <div class="max-w-6xl mx-auto px-4 py-3 grid grid-cols-3 items-center">
-      <!-- 左側：品牌 -->
-      <a href="index.html" class="flex items-center gap-2 justify-self-start" aria-label="返回首頁">
-        <img src="logo-mark.jpg" alt="自然大叔" class="h-8 w-8 rounded-md" />
-        <span class="font-extrabold tracking-tight">自然大叔</span>
-      </a>
+    <div class="max-w-6xl mx-auto px-4 py-3">
+      <!-- 第一行：品牌（左右留白，避免擠壓） -->
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2" aria-label="返回首頁">
+          <img src="logo-mark.jpg" alt="自然大叔" class="h-8 w-8 rounded-md" />
+          <span class="font-extrabold tracking-tight">自然大叔</span>
+        </a>
+        <!-- 右側預留空間（未放按鈕，避免擠壓） -->
+        <span class="w-8 h-8" aria-hidden="true"></span>
+      </div>
 
-      <!-- 中間：置中導覽（膠囊） -->
-      <nav class="justify-self-center w-full max-w-md overflow-x-auto">
-        <div class="nav-shell flex items-center justify-center gap-1">
+      <!-- 第二行：手機導覽（全寬置中，可水平滑動） -->
+      <nav class="mt-2 md:hidden">
+        <div class="nav-shell no-scrollbar overflow-x-auto flex items-center justify-center gap-1 px-1">
           <a href="index.html" class="nav-pill">首頁</a>
-          <a href="pricing.html" class="nav-pill nav-active">價格細項</a>
+          <a href="pricing.html" class="nav-pill nav-active" aria-current="page">價格細項</a>
         </div>
       </nav>
 
-      <!-- 右側：占位使導覽真正置中 -->
-      <div class="justify-self-end" aria-hidden="true" style="width:88px;height:32px"></div>
+      <!-- 桌機導覽（維持置中膠囊） -->
+      <nav class="hidden md:flex items-center justify-center mt-2">
+        <div class="nav-shell flex items-center justify-center gap-1 px-1">
+          <a href="index.html" class="nav-pill">首頁</a>
+          <a href="pricing.html" class="nav-pill nav-active" aria-current="page">價格細項</a>
+        </div>
+      </nav>
     </div>
   </header>
 
@@ -167,7 +180,7 @@
         <summary class="font-semibold cursor-pointer">加價與不承作情形</summary>
         <ul class="list-disc pl-6 mt-2 text-sm text-slate-600">
           <li>高空/需吊掛作業（另估）。</li>
-          <li>面板/外殼斷裂、卡扣缺失，清洗前會先告知風險。</li>
+          <li>面板/外壳斷裂、卡扣缺失，清洗前會先告知風險。</li>
           <li>冷媒不足、安裝不良屬冷凍空調範疇，建議先處理後再清洗。</li>
         </ul>
       </details>
@@ -291,7 +304,7 @@
     </div>
   </section>
 
-  <!-- CTA（移除「線上預約」按鈕，保留 LINE 與返回首頁價格表） -->
+  <!-- CTA -->
   <section class="bg-slate-50 border-t">
     <div class="max-w-6xl mx-auto px-4 py-10 text-center">
       <h2 class="text-2xl md:text-3xl font-extrabold">已看過價格了嗎？</h2>
@@ -307,7 +320,7 @@
     <div class="max-w-6xl mx-auto px-4 py-8 text-sm text-slate-500">© <span id="year"></span> 自然大叔 Natural Uncle｜統編：88537528</div>
   </footer>
 
-  <!-- 浮動按鈕：返回頂部 + LINE 預約（保留） -->
+  <!-- 浮動按鈕：返回頂部 + LINE 預約 -->
   <a href="#top" id="backTop" class="fab fab-top is-hidden" aria-label="返回頂部" title="返回頂部">↑</a>
   <a href="https://line.me/R/ti/p/@uncle888" class="fab fab-book" aria-label="LINE 預約" title="LINE 預約">LINE 預約</a>
 
@@ -325,7 +338,6 @@
           root.classList.toggle('dark', val==='dark');
           root.classList.toggle('light', val==='light');
         }else{
-          // 沒有手動偏好時，跟隨系統
           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
           root.classList.toggle('dark', prefersDark);
           root.classList.toggle('light', !prefersDark);
@@ -335,7 +347,7 @@
       // 初次載入
       apply(localStorage.getItem(KEY));
 
-      // 跨分頁即時同步（在首頁切換時，這頁會更新）
+      // 跨分頁即時同步
       window.addEventListener('storage', (e)=>{
         if(e.key===KEY) apply(e.newValue);
       });
