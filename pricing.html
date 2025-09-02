@@ -16,20 +16,47 @@
   <meta property="og:url" content="https://yourdomain.com/pricing.html" />
 
   <style>
+    /* 基本主題變數（預設跟隨系統） */
+    :root{
+      --bg:#fff; --text:#0f172a; --muted:#475569;
+      --card:#fff; --border:#e2e8f0;
+      --primary:#06C755; --primary-hover:#04b34c; --accent:#3b7d2b;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b1220; --text:#e5e7eb; --muted:#94a3b8;
+        --card:#0f172a; --border:#1f2937; --accent:#fbbf24;
+      }
+    }
+    /* 明確的 dark/light 類別，與首頁同步（localStorage: theme-pref） */
+    body.dark{
+      --bg:#0b1220; --text:#e5e7eb; --muted:#94a3b8;
+      --card:#0f172a; --border:#1f2937; --accent:#fbbf24;
+    }
+    body.light{
+      --bg:#fff; --text:#0f172a; --muted:#475569;
+      --card:#fff; --border:#e2e8f0; --accent:#3b7d2b;
+    }
     html{scroll-behavior:smooth}
-    :root{--bg:#fff;--text:#0f172a;--muted:#475569;--card:#fff;--border:#e2e8f0;--primary:#06C755;--primary-hover:#04b34c;--accent:#3b7d2b}
-    @media (prefers-color-scheme: dark){:root{--bg:#0b1220;--text:#e5e7eb;--muted:#94a3b8;--card:#0f172a;--border:#1f2937;--accent:#fbbf24}}
-    body{background:var(--bg);color:var(--text)} .muted{color:var(--muted)}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:1.25rem}
-    .btn{display:inline-flex;align-items:center;justify-content:center;padding:.7rem 1.1rem;border-radius:.75rem;font-weight:700;transition:background-color .2s ease}
-    .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-hover)}
-    .btn-outline{border:1px solid var(--border);color:var(--text)}
-    .toc a{padding:.5rem .75rem;border:1px solid var(--border);border-radius:.6rem;transition:background-color .2s ease}
-    .toc a:hover{background:var(--primary);color:#fff}
-    .price th{font-weight:800}
+    body{background:var(--bg);color:var(--text)}
+    .muted{color:var(--muted)}
     header,footer{background:var(--card)}
     body.dark header{background:rgba(15,23,42,.92);border-color:#334155}
     body.dark footer{background:#0f172a;border-color:#334155}
+
+    /* 元件 */
+    .card{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:1.25rem}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:.7rem 1.1rem;border-radius:.75rem;font-weight:700;transition:transform .15s ease,background-color .2s ease,box-shadow .2s ease}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-hover)}
+    .btn-outline{border:1px solid var(--border);color:var(--text);background:var(--card)}
+    .toc a{padding:.5rem .75rem;border:1px solid var(--border);border-radius:.6rem;transition:background-color .2s ease}
+    .toc a:hover{background:var(--primary);color:#fff}
+    .price th{font-weight:800}
+    table{width:100%;border-collapse:collapse;text-align:left}
+    thead th{border-bottom:1px solid var(--border);padding:.75rem .5rem}
+    tbody td{border-bottom:1px solid var(--border);padding:.7rem .5rem}
+    body.dark thead th, body.dark tbody td{border-color:#334155}
 
     /* 浮動按鈕（返回頂部 + 我要預約） */
     .fab{position:fixed;right:1rem;z-index:60;display:flex;align-items:center;justify-content:center;border-radius:9999px;
@@ -41,12 +68,12 @@
     @media (max-width:767.98px){ .fab-top{bottom:calc(5.5rem + env(safe-area-inset-bottom,0px))} }
   </style>
 </head>
-<body id="top">
+<body id="top" data-theme>
   <!-- Header -->
   <header class="sticky top-0 z-50 backdrop-blur border-b">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2" aria-label="返回首頁">
-        <img src="logo-mark.png" alt="自然大叔" class="h-8 w-8" />
+        <img src="logo-mark.jpg" alt="自然大叔" class="h-8 w-8" />
         <span class="font-extrabold">自然大叔</span>
       </a>
       <nav class="hidden md:flex gap-4 text-sm">
@@ -95,7 +122,6 @@
           <h2 class="text-2xl font-extrabold">冷氣清洗</h2>
           <p class="mt-1 muted">分離式/窗型，現場掛洗。含防滴與環保清潔劑。</p>
         </div>
-        <!-- 移除：這個服務我要預約 按鈕 -->
       </div>
       <div class="overflow-x-auto mt-5">
         <table class="price w-full text-left text-sm">
@@ -103,9 +129,9 @@
             <tr class="border-b"><th class="py-3">機型/條件</th><th>基本價格（含稅）</th><th>加價情形</th><th>備註</th></tr>
           </thead>
           <tbody>
-            <tr class="border-b"><td class="py-3">分離式（標準尺寸）/台</td><td>NT$ 1,800 起</td><td>加大加長、變頻旗艦、難施工</td><td>含防滴、清潔劑、前後照</td></tr>
-            <tr class="border-b"><td class="py-3">窗型（標準尺寸）/台</td><td>NT$ 1,500 起</td><td>嵌入式、過深位置</td><td>不拆室內管線</td></tr>
-            <tr><td class="py-3">室外機</td><td>NT$ 800 起</td><td>高樓外牆需另估</td><td>安全優先</td></tr>
+            <tr class="border-b"><td class="py-3">分離式（標準尺寸）/台</td><td>NT$ 1,800 起</td><td>加大加長款、特殊機款</td><td>含防護、清潔劑、前後照</td></tr>
+            <tr class="border-b"><td class="py-3">吊隱式冷氣 /台</td><td>NT$ 2,800 起</td><td>特殊機款</td><td>不拆保溫風管</td></tr>
+            <tr><td class="py-3">室外機</td><td>NT$ 300 起</td><td>高樓外牆需另估</td><td>安全優先</td></tr>
           </tbody>
         </table>
       </div>
@@ -128,7 +154,6 @@
           <h2 class="text-2xl font-extrabold">直立式洗衣機清洗</h2>
           <p class="mt-1 muted">全機拆洗除黴水垢，還原洗淨力。</p>
         </div>
-        <!-- 移除：這個服務我要預約 按鈕 -->
       </div>
       <div class="overflow-x-auto mt-5">
         <table class="price w-full text-left text-sm">
@@ -136,15 +161,14 @@
             <tr class="border-b"><th class="py-3">容量/條件</th><th>基本價格（含稅）</th><th>加價情形</th><th>備註</th></tr>
           </thead>
           <tbody>
-            <tr class="border-b"><td class="py-3">一般 10–14kg</td><td>NT$ 2,000 起</td><td>生鏽/卡死螺帽需工時</td><td>含拆桶、除黴</td></tr>
-            <tr><td class="py-3">大容量 15kg 以上</td><td>NT$ 2,500 起</td><td>陽台狹窄、無排水需另備</td><td>現場安全評估</td></tr>
+            <tr class="border-b"><td class="py-3">一般家用</td><td>NT$ 2,000 起</td><td>生鏽螺帽更換時</td><td>含拆桶、除黴</td></tr>
           </tbody>
         </table>
       </div>
       <details class="mt-4">
         <summary class="font-semibold cursor-pointer">注意與限制</summary>
         <ul class="list-disc pl-6 mt-2 text-sm text-slate-600">
-          <li>滾筒式不在此服務；可來訊評估是否承作。</li>
+          <li>滾筒式不在此服務。</li>
           <li>機齡過高塑料脆化，拆裝風險會先說明。</li>
         </ul>
       </details>
@@ -157,9 +181,8 @@
       <div class="flex items-start justify-between gap-4">
         <div>
           <h2 class="text-2xl font-extrabold">水塔清洗</h2>
-          <p class="mt-1 muted">排空、刷洗、沖淨，附清洗照片存證。</p>
+          <p class="mt-1 muted">排空、刷洗，附清洗照片存證。</p>
         </div>
-        <!-- 移除：這個服務我要預約 按鈕 -->
       </div>
       <div class="overflow-x-auto mt-5">
         <table class="price w-full text-left text-sm">
@@ -167,8 +190,8 @@
             <tr class="border-b"><th class="py-3">容量/材質</th><th>基本價格（含稅）</th><th>加價情形</th><th>備註</th></tr>
           </thead>
           <tbody>
-            <tr class="border-b"><td class="py-3">家用 ≤1噸</td><td>NT$ 1,000 起</td><td>高樓層/狹窄機房</td><td>含出入動線清潔</td></tr>
-            <tr><td class="py-3">1–3 噸</td><td>NT$ 1,800 起</td><td>特殊材質需客製工具</td><td>需可用水源/排水</td></tr>
+            <tr class="border-b"><td class="py-3">家用 ≤2噸</td><td>NT$ 1,000 起</td><td>放置高危險/狹窄機房</td><td>需可用水源/排水</td></tr>
+            <tr><td class="py-3">家用 2–3 噸</td><td>NT$ 1,500 起</td><td>放置高危險/狹窄機房</td><td>需可用水源/排水</td></tr>
           </tbody>
         </table>
       </div>
@@ -190,7 +213,6 @@
           <h2 class="text-2xl font-extrabold">自來水管清洗</h2>
           <p class="mt-1 muted">脈衝清洗去除鏽垢，改善黃水/水壓不穩。</p>
         </div>
-        <!-- 移除：這個服務我要預約 按鈕 -->
       </div>
       <div class="overflow-x-auto mt-5">
         <table class="price w-full text-left text-sm">
@@ -198,8 +220,8 @@
             <tr class="border-b"><th class="py-3">住家型態</th><th>基本價格（含稅）</th><th>加價情形</th><th>備註</th></tr>
           </thead>
           <tbody>
-            <tr class="border-b"><td class="py-3">套房/小坪數（單迴路）</td><td>NT$ 3,200 起</td><td>多重管線、老舊管材</td><td>含基本檢測</td></tr>
-            <tr><td class="py-3">家庭（2 衛以上）</td><td>NT$ 4,500 起</td><td>加壓機/淨水設備需額外處理</td><td>現場評估</td></tr>
+            <tr class="border-b"><td class="py-3">套房/小坪數（單迴路）</td><td>NT$ 3,200 起</td><td>多重管線</td><td>含基本檢測、現場評估</td></tr>
+            <tr><td class="py-3">家庭（2 衛以上）</td><td>NT$ 4,500 起</td><td>多重管線</td><td>含基本檢測、現場評估</td></tr>
           </tbody>
         </table>
       </div>
@@ -218,7 +240,10 @@
     <div class="grid md:grid-cols-3 gap-6">
       <div class="card p-6">
         <h3 class="text-xl font-bold">售後保固</h3>
-        <p class="mt-2 text-sm text-slate-600">清洗完成起 <strong>14 天</strong>。漏水、使用異常等清洗關聯問題，專人到府處理至正常。原本安裝不良、機件老舊/破裂/鏽蝕/耗損等非清洗因素不在範圍。</p>
+       <p class="mt-2 text-sm text-slate-600">
+          清洗完成起 14 天。漏水、使用異常等清洗關聯問題，專人到府處理至正常。<br>
+          原本安裝不良、機件老舊/破裂/鏽蝕/耗損等非清洗因素不在範圍。
+        </p>
       </div>
       <div class="card p-6">
         <h3 class="text-xl font-bold">收費與發票</h3>
@@ -259,6 +284,41 @@
   <script>
     // 年份
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // 題示：與首頁同步深/淺色（localStorage: 'theme-pref'）
+    (function(){
+      const KEY='theme-pref';
+      const root=document.body;
+
+      function apply(val){
+        if(val==='dark' || val==='light'){
+          root.classList.toggle('dark', val==='dark');
+          root.classList.toggle('light', val==='light');
+        }else{
+          // 沒有手動偏好時，跟隨系統
+          const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          root.classList.toggle('dark', prefersDark);
+          root.classList.toggle('light', !prefersDark);
+        }
+      }
+
+      // 初次載入
+      apply(localStorage.getItem(KEY));
+
+      // 跨分頁即時同步（在首頁切換時，這頁會更新）
+      window.addEventListener('storage', (e)=>{
+        if(e.key===KEY) apply(e.newValue);
+      });
+
+      // 系統主題改變時（只有在沒有手動偏好時才跟）
+      const mq=window.matchMedia('(prefers-color-scheme: dark)');
+      if(mq.addEventListener){
+        mq.addEventListener('change', (e)=>{
+          if(localStorage.getItem(KEY)) return;
+          apply(e.matches ? 'dark' : 'light');
+        });
+      }
+    })();
 
     // 返回頂部顯示控制
     (function(){
