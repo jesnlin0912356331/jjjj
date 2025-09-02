@@ -173,7 +173,7 @@
     .fab-top{bottom:calc(9rem + env(safe-area-inset-bottom,0px));width:48px;height:48px;background:#0ea5e9;color:#fff;font-size:1.25rem}
     @media (max-width:767.98px){ .fab-top{bottom:calc(9.5rem + env(safe-area-inset-bottom,0px))} }
 
-    /* ★ 關鍵：LINE 預約按鈕與 pricing.html 完全相同的比例與樣式 */
+    /* ★ 關鍵：LINE 預約按鈕（獨立懸浮）維持一致比例 */
     .fab-book{
       bottom:calc(1rem + env(safe-area-inset-bottom,0px));
       min-width:48px;
@@ -184,18 +184,34 @@
       font-weight:800;
       border-radius:9999px;
     }
-    /* 不做任何行動版覆寫，確保兩頁比例一致（48px 高，左右內距 1.1rem） */
 
-    /* ====== 預約按鈕優化（聯絡/預約區塊） ====== */
-    .btn-booking{
-      padding:.85rem 1.25rem;
-      line-height:1;
-      letter-spacing:.2px;
-      white-space:nowrap;
-      min-width:min(100%, 18rem);
-    }
-    @media (min-width:640px){
-      .btn-booking{ width:auto; }
+    /* ====== 行動版浮動快速按鈕（本次修正重點） ====== */
+    @media (max-width: 767.98px){
+      .mobile-fab a{
+        display:flex;align-items:center;justify-content:center;
+        height:48px;                 /* 與 .fab-book 完全一致 */
+        padding:0 1.1rem;            /* 與 .fab-book 完全一致 */
+        border-radius:9999px;        /* 真正的膠囊形狀 */
+        font-weight:800;
+        border:0;
+        box-shadow:0 8px 24px rgba(0,0,0,.22);
+        /* iOS Safari 內部橢圓假影修正 */
+        -webkit-appearance:none;
+        background-clip:padding-box;
+        -webkit-mask-image:-webkit-radial-gradient(white, black);
+      }
+      /* 兩顆都改為實心填色，保持視覺一致 */
+      .mobile-fab .btn-ghost{
+        background:var(--accent);    /* 撥打電話：實心藍 */
+        color:#fff;
+      }
+      .mobile-fab .btn-primary{
+        background:var(--primary);   /* LINE：實心綠 */
+        color:#fff;
+      }
+      .mobile-fab a:hover{
+        transform:translateY(-1px) scale(1.03);
+      }
     }
 
     /* =========================
@@ -519,7 +535,7 @@
     </div>
   </footer>
 
-  <!-- 行動版浮動快速按鈕 -->
+  <!-- 行動版浮動快速按鈕（已統一比例與實心填色） -->
   <div class="fixed bottom-4 right-4 flex flex-col gap-2 md:hidden mobile-fab">
     <a href="tel:+886912356331" class="btn btn-ghost">撥打電話</a>
     <a href="https://line.me/R/ti/p/@uncle888" class="btn btn-primary">LINE 諮詢</a>
