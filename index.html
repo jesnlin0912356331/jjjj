@@ -160,7 +160,7 @@
     }
     header nav{ gap:clamp(12px, 2vw, 24px) }
 
-    /* ========= 浮動按鈕 ========= */
+    /* ========= 浮動按鈕（共用） ========= */
     .fab{
       position:fixed;right:1rem;z-index:60;
       display:inline-flex;align-items:center;justify-content:center;
@@ -172,24 +172,27 @@
     .fab:hover{transform:translateY(-1px) scale(1.05);box-shadow:0 12px 28px rgba(0,0,0,.28)}
     .fab.is-hidden{opacity:0;pointer-events:none}
 
-    /* ⇩ 修正：手機深色模式下 LINE 預約按鈕為正確橢圓形 ⇩ */
+    /* === 與 pricing.html 完全一致的 LINE 預約按鈕設定（手機深色模式橢圓形） === */
     .fab-book{
       bottom:calc(1rem + env(safe-area-inset-bottom,0px));
-      height:48px; padding:0 1.25rem;
-      background:var(--primary); color:#fff; font-weight:800;
-      white-space:nowrap; line-height:1; border:0;
-      border-radius:9999px;           /* 確保圓角 */
-      min-width:48px;                  /* 基本最小寬 */
+      min-width:48px;
+      height:48px;
+      padding:0 1.1rem;
+      background:var(--primary);
+      color:#fff;
+      font-weight:800;
+      white-space:nowrap;
+      line-height:1;
+      border:0;
+      border-radius:9999px;
     }
-    /* 手機上強制呈現「橢圓膠囊」寬度，避免成為圓形或方塊 */
     @media (max-width:767.98px){
       .fab-book{
-        min-width:160px;               /* 讓寬度 > 高度 ⇒ 橢圓 */
-        height:52px;                   /* 稍微加高手感更好 */
-        padding:0 20px;                /* 內距讓字不擠 */
+        min-width:160px;   /* 寬 > 高 ⇒ 橢圓膠囊 */
+        height:52px;
+        padding:0 20px;
       }
     }
-    /* 深色模式仍維持橢圓與陰影 */
     body.dark .fab-book{
       background:var(--primary);
       box-shadow:0 10px 28px rgba(0,0,0,.35);
@@ -201,9 +204,12 @@
     }
     @media (max-width:767.98px){ .fab-top{bottom:calc(9.5rem + env(safe-area-inset-bottom,0px))} }
 
-    /* ====== 預約按鈕（聯絡/預約區塊） ====== */
+    /* ====== 預約按鈕優化（聯絡/預約區塊） ====== */
     .btn-booking{
-      padding:.85rem 1.25rem; line-height:1; letter-spacing:.2px; white-space:nowrap;
+      padding:.85rem 1.25rem;
+      line-height:1;
+      letter-spacing:.2px;
+      white-space:nowrap;
       min-width:min(100%, 18rem);
     }
     @media (min-width:640px){ .btn-booking{ width:auto; } }
