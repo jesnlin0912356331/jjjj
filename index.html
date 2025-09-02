@@ -141,7 +141,6 @@
     body.dark #pricing thead th{ color:#f8fafc; border-color:#334155 !important; font-weight:800; }
     body.dark #pricing tbody tr{ border-color:#334155 }
     body.dark #pricing td{ color:#e5e7eb }
-    body.dark #pricing p, body.dark #pricing .muted{ color:#94a3b8 }
     body.dark #faq{ background:#0b1220 !important; }
     body.dark #faq h2{ color:#ffffff }
     body.dark details.faq{ background:#0f172a; border-color:#334155 !important; }
@@ -181,6 +180,149 @@
     @media (min-width:640px){
       .btn-booking{ width:auto; }
     }
+
+    /* =========================
+       ↓↓↓ 覆蓋式「色彩與對比升級」↓↓↓
+       放在原樣式之後，無需改 HTML
+       ========================= */
+    /* --- Base (Light) 覆蓋 --- */
+    :root{
+      --bg:#f3f5f9;               /* 畫布：冷淺灰，提高層次 */
+      --text:#0b1220;             /* 主字：深藍黑 */
+      --muted:#5b6b7f;            /* 次字：中灰藍 */
+
+      --card-bg:#ffffff;
+      --border:#d7deea;           /* 分隔線更清楚 */
+
+      --primary:#06C755; 
+      --primary-hover:#05b451;
+      --success:#0aa57a; 
+      --success-hover:#078d67;
+
+      --ghost-bg:#ffffff; 
+      --ghost-border:#c9d3e3;
+
+      --accent:#2563eb;           /* 輔助強調：藍（主 CTA） */
+      --text-strong:#0a0f1a;
+    }
+
+    /* --- Dark 覆蓋：確保字體清晰 --- */
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b1220;
+        --text:#e7edf6;           /* 對比 > 10:1 */
+        --muted:#afbbce;
+        --card-bg:#0f172a;
+        --border:#233046;
+        --ghost-bg:#0f172a; 
+        --ghost-border:#2a3a53;
+        --accent:#60a5fa;
+        --text-strong:#ffffff;
+      }
+    }
+    body.dark{
+      --bg:#0b1220;
+      --text:#e7edf6;
+      --muted:#afbbce;
+      --card-bg:#0f172a;
+      --border:#233046;
+      --ghost-bg:#0f172a; 
+      --ghost-border:#2a3a53;
+      --accent:#60a5fa;
+      --text-strong:#ffffff;
+    }
+    body.light{
+      --bg:#f3f5f9;
+      --text:#0b1220;
+      --muted:#5b6b7f;
+      --card-bg:#ffffff;
+      --border:#d7deea;
+      --ghost-bg:#ffffff; 
+      --ghost-border:#c9d3e3;
+      --accent:#2563eb;
+      --text-strong:#0a0f1a;
+    }
+
+    /* 畫布背景：雙輻射暈 + 漸層（整體更有層次） */
+    body[data-theme]{
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(37,99,235,.12), transparent 60%),
+        radial-gradient(1000px 500px at 90% -20%, rgba(6,199,85,.12), transparent 55%),
+        linear-gradient(#f6f8fc, #eef2f8);
+      color:var(--text);
+    }
+    body.dark[data-theme]{
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(96,165,250,.20), transparent 60%),
+        radial-gradient(1000px 500px at 90% -20%, rgba(6,199,85,.18), transparent 55%),
+        linear-gradient(#0f172a, #0b1220);
+    }
+
+    /* 文字顏色保障可讀性 */
+    .muted{ color:var(--muted) }
+    h1,h2,h3{ color:var(--text-strong); letter-spacing:.2px }
+
+    /* 卡片陰影與邊界提昇（不變版面） */
+    .card{
+      background:var(--card-bg);
+      border:1px solid var(--border);
+      box-shadow:0 6px 20px rgba(15,23,42,.06);
+    }
+    body.dark .card{
+      box-shadow:0 8px 24px rgba(0,0,0,.35);
+    }
+
+    /* 按鈕：主 CTA 用 accent（藍），其它維持品牌綠與 ghost */
+    .btn{ box-shadow:0 3px 10px rgba(2,6,23,.06) }
+    .btn-primary{ background:var(--accent); color:#fff }
+    .btn-primary:hover{ background:#1d4ed8 }
+    .btn-success{ background:var(--primary); color:#fff }
+    .btn-success:hover{ background:var(--primary-hover) }
+    .btn-ghost{ background:var(--ghost-bg); border:1px solid var(--ghost-border); color:var(--text) }
+    .btn-ghost:hover{ box-shadow:0 6px 20px rgba(0,0,0,.08) }
+
+    /* 表格分隔對比更高（深色也清楚） */
+    #pricing thead th{
+      color:var(--text-strong);
+      border-color:var(--border) !important;
+      background:linear-gradient(180deg, rgba(37,99,235,.08), rgba(37,99,235,0));
+      font-weight:800;
+    }
+    #pricing tbody tr{ border-color:var(--border) }
+    #pricing td{ color:var(--text) }
+    body.dark #pricing thead th{
+      background:linear-gradient(180deg, rgba(96,165,250,.18), rgba(96,165,250,0));
+    }
+
+    /* Header / Footer：深淺皆清晰 */
+    header{
+      background:rgba(255,255,255,.88);
+      backdrop-filter:saturate(1.1) blur(8px);
+      border-color:var(--border) !important;
+      box-shadow:0 2px 12px rgba(2,6,23,.04);
+    }
+    body.dark header{
+      background:rgba(15,23,42,.88);
+    }
+    footer{
+      background:transparent;
+      border-color:var(--border) !important;
+    }
+
+    /* FAQ/流程提升可視性 */
+    details.faq summary{ color:var(--text-strong) }
+    details.faq summary::before{ color:var(--muted) }
+    details.faq[open] summary::before{ color:var(--accent) }
+    .timeline:before{ background:var(--border) }
+    .timeline-item:before{
+      background:linear-gradient(135deg, var(--accent), var(--primary));
+      box-shadow:0 0 0 3px rgba(37,99,235,.08);
+    }
+
+    /* 浮動元件色彩同步 */
+    .fab-top{ background:var(--accent); color:#fff }
+    .fab-book{ background:var(--primary); color:#fff }
+    .theme-toggle{ background:var(--accent); color:#fff }
   </style>
 </head>
 
@@ -365,8 +507,6 @@
       </div>
     </details>
   </section>
-
-  <!-- 已移除整段：省電效益試算 -->
 
   <!-- 案例見證（只保留前後對比照） -->
   <section id="cases" class="max-w-6xl mx-auto px-4 py-12 reveal">
