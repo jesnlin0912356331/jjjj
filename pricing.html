@@ -98,6 +98,113 @@
 
     /* 🔧 深色模式可讀性修正：CTA 標題在淺底上改用深色 */
     body.dark .cta-heading{ color:#0b1220 !important; }
+
+    /* =========================
+       ↓ 覆蓋式「色彩與對比升級」（與首頁一致） ↓
+       ========================= */
+
+    /* Light 基底更有層次，字色更深 */
+    :root{
+      --bg:#f3f5f9;               /* 畫布：冷淺灰 */
+      --text:#0b1220;             /* 主要文字：深藍黑 */
+      --muted:#5b6b7f;            /* 次文字：中灰藍 */
+
+      --card:#ffffff;
+      --border:#d7deea;           /* 分隔更清楚 */
+
+      --primary:#06C755;
+      --primary-hover:#05b451;
+
+      /* 輔助強調色（藍）統一作為主 CTA 與裝飾 */
+      --accent:#2563eb;
+    }
+
+    /* Dark 對比與可讀性加強 */
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b1220;
+        --text:#e7edf6;           /* 對比高、偏藍白 */
+        --muted:#afbbce;          /* 次文字提升可讀 */
+        --card:#0f172a;
+        --border:#233046;
+        --accent:#60a5fa;         /* 深色下 CTA 偏亮藍 */
+      }
+    }
+    body.dark{
+      --bg:#0b1220;
+      --text:#e7edf6;
+      --muted:#afbbce;
+      --card:#0f172a;
+      --border:#233046;
+      --accent:#60a5fa;
+    }
+    body.light{
+      --bg:#f3f5f9;
+      --text:#0b1220;
+      --muted:#5b6b7f;
+      --card:#ffffff;
+      --border:#d7deea;
+      --accent:#2563eb;
+    }
+
+    /* 畫布背景：雙輻射暈 + 漸層（提升層次感） */
+    body{
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(37,99,235,.12), transparent 60%),
+        radial-gradient(1000px 500px at 90% -20%, rgba(6,199,85,.12), transparent 55%),
+        linear-gradient(#f6f8fc, #eef2f8);
+      color:var(--text);
+    }
+    body.dark{
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(96,165,250,.20), transparent 60%),
+        radial-gradient(1000px 500px at 90% -20%, rgba(6,199,85,.18), transparent 55%),
+        linear-gradient(#0f172a, #0b1220);
+    }
+
+    /* 卡片層次與陰影（深色也清楚） */
+    .card{
+      border:1px solid var(--border);
+      box-shadow:0 6px 20px rgba(15,23,42,.06);
+    }
+    body.dark .card{ box-shadow:0 8px 24px rgba(0,0,0,.35) }
+
+    /* CTA：統一以 accent 藍為主行為色（與首頁一致） */
+    .btn-primary{ background:var(--accent); color:#fff }
+    .btn-primary:hover{ background:#1d4ed8 }
+
+    /* 目錄膠囊 hover 改為 accent 藍 */
+    .toc a:hover{ background:var(--accent); color:#fff; border-color:transparent }
+
+    /* 表格：表頭加入細緻漸層、列條紋 */
+    thead th{
+      background:linear-gradient(180deg, rgba(37,99,235,.08), rgba(37,99,235,0));
+      color:var(--text);
+      font-weight:800;
+    }
+    tbody tr:nth-child(2n){ background:rgba(2,6,23,.03) }
+    body.dark tbody tr:nth-child(2n){ background:rgba(255,255,255,.03) }
+
+    /* Header/ Footer 透明玻璃感 + 邊界強化 */
+    header{
+      background:rgba(255,255,255,.88);
+      backdrop-filter:saturate(1.1) blur(8px);
+      border-bottom:1px solid var(--border);
+      box-shadow:0 2px 12px rgba(2,6,23,.04);
+    }
+    body.dark header{ background:rgba(15,23,42,.88) }
+    footer{
+      background:transparent;
+      border-top:1px solid var(--border);
+    }
+
+    /* 膠囊導覽：使用主品牌綠作為目前頁籤，hover 仍保留柔和底 */
+    .nav-active{ background:var(--primary); color:#fff }
+    .nav-active:hover{ background:var(--primary-hover) }
+
+    /* 浮動元件與快速預約色彩同步 */
+    .fab-top{ background:var(--accent); color:#fff }
+    .fab-book{ background:var(--primary); color:#fff }
   </style>
 </head>
 <body id="top" data-theme>
@@ -110,7 +217,6 @@
           <img src="logo-mark.jpg" alt="自然大叔" class="h-8 w-8 rounded-md" />
           <span class="font-extrabold tracking-tight">自然大叔</span>
         </a>
-        <!-- 右側預留空間（未放按鈕，避免擠壓） -->
         <span class="w-8 h-8" aria-hidden="true"></span>
       </div>
 
@@ -331,7 +437,7 @@
     // 年份
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 題示：與首頁同步深/淺色（localStorage: 'theme-pref'）
+    // 與首頁同步深/淺色（localStorage: 'theme-pref'）
     (function(){
       const KEY='theme-pref';
       const root=document.body;
