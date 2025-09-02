@@ -160,8 +160,6 @@
     body.dark details.faq{ background:#0f172a; border-color:#334155 !important; }
     body.dark details.faq summary{ color:#e5e7eb }
     body.dark details.faq .faq-content{ color:#cbd5e1 }
-    body.dark table thead th{ color:#f8fafc; border-color:#334155 !important; }
-    body.dark table td{ color:#e5e7eb }
     body.dark .btn-ghost{ background: rgba(255,255,255,.06); border-color:#334155; color:#e5e7eb; }
     body.dark .btn-ghost:hover{ background: rgba(255,255,255,.1) }
     body.dark .card-desc{ color:#cbd5e1 }
@@ -188,7 +186,7 @@
   <header class="bg-white/90 sticky top-0 backdrop-blur z-50 border-b">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <!-- 左側品牌：使用橫式 LOGO；深色時加陰影增對比 -->
-      <a href="/" class="flex items-center gap-3">
+      <a href="index.html" class="flex items-center gap-3">
         <!-- 淺色 -->
         <img
           src="logo-horizontal.png"
@@ -209,6 +207,7 @@
       <nav class="hidden md:flex gap-6 text-sm">
         <a href="#services">服務項目</a>
         <a href="#pricing">價格方案</a>
+        <a href="pricing.html">價格細項</a>
         <a href="#process">施工流程</a>
         <a href="#ac-sop">冷氣SOP</a>
         <a href="#calculator">省電試算</a>
@@ -243,7 +242,7 @@
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
       <div class="card">
         <h3 class="card-title">冷氣清洗</h3>
-        <p class="card-desc">拆洗蒸發器、風鼓、濾網，防水防滴處理。</p>
+        <p class="card-desc">清洗蒸發器、風鼓、濾網，防水防護處理。</p>
         <a href="#ac-sop" class="btn btn-ghost mt-3">查看完整 SOP →</a>
       </div>
       <div class="card">
@@ -252,7 +251,7 @@
       </div>
       <div class="card">
         <h3 class="card-title">水塔清洗</h3>
-        <p class="card-desc">排空、刷洗、消毒，附清洗照片存證。</p>
+        <p class="card-desc">排空、刷洗，附清洗照片存證。</p>
       </div>
       <div class="card">
         <h3 class="card-title">自來水管清洗</h3>
@@ -264,16 +263,19 @@
   <!-- 透明價格 -->
   <section id="pricing" class="bg-slate-50 reveal">
     <div class="max-w-6xl mx-auto px-4 py-12">
-      <h2 class="text-2xl md:text-3xl font-bold mb-6">透明價格</h2>
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl md:text-3xl font-bold">透明價格</h2>
+        <a href="pricing.html" class="text-sm underline text-sky-700">查看完整價格細項</a>
+      </div>
       <div class="overflow-x-auto">
         <table class="w-full text-left text-sm">
           <thead><tr class="border-b">
-            <th class="py-3">項目</th><th>基本價格</th><th>加購/加價</th><th>備註</th></tr></thead>
+            <th class="py-3">項目</th><th>基本價格</th><th>加購/加價</th><th>備註</th><th class="sr-only">細項</th></tr></thead>
           <tbody>
-            <tr class="border-b"><td class="py-3">冷氣（分離式/台）</td><td>$1,800 起</td><td>室外機、架高/加層</td><td>含防滴與清潔劑</td></tr>
-            <tr class="border-b"><td class="py-3">洗衣機（直立式）</td><td>$2,000 起</td><td>嚴重汙垢加時</td><td>全機拆洗殺菌</td></tr>
-            <tr class="border-b"><td class="py-3">家用水塔</td><td>$1,000 起</td><td>大容量另計</td><td>附清洗照片</td></tr>
-            <tr><td class="py-3">自來水管</td><td>$3,200 起</td><td>管線複雜另計</td><td>改善黃水/水壓</td></tr>
+            <tr class="border-b"><td class="py-3">冷氣（分離式/台）</td><td>$1,800 起</td><td>加大加長款、特殊機款</td><td>含防滴與清潔劑</td><td><a href="pricing.html#ac" class="btn btn-ghost py-2 px-3 text-xs" aria-label="查看冷氣清洗價格細項">細項</a></td></tr>
+            <tr class="border-b"><td class="py-3">洗衣機（直立式）</td><td>$2,000 起</td><td>無</td><td>全機拆洗殺菌</td><td><a href="pricing.html#wm" class="btn btn-ghost py-2 px-3 text-xs" aria-label="查看洗衣機清洗價格細項">細項</a></td></tr>
+            <tr class="border-b"><td class="py-3">家用水塔</td><td>$1,000 起</td><td>大容量另計</td><td>附清洗照片</td><td><a href="pricing.html#tank" class="btn btn-ghost py-2 px-3 text-xs" aria-label="查看水塔清洗價格細項">細項</a></td></tr>
+            <tr><td class="py-3">自來水管</td><td>$3,200 起</td><td>多重管線</td><td>改善黃水/水壓</td><td><a href="pricing.html#pipe" class="btn btn-ghost py-2 px-3 text-xs" aria-label="查看自來水管清洗價格細項">細項</a></td></tr>
           </tbody>
         </table>
       </div>
@@ -287,10 +289,10 @@
     <div class="grid md:grid-cols-2 gap-8">
       <div class="p-5 rounded-2xl border">
         <div class="timeline">
-          <div class="timeline-item"><h3 class="font-semibold">步驟 1｜線上估價與預約</h3><p class="muted text-sm mt-1">LINE 傳地址、設備照片與樓層，安排時段並確認費用區間。</p></div>
-          <div class="timeline-item"><h3 class="font-semibold">步驟 2｜到府前防護與檢查</h3><p class="muted text-sm mt-1">鋪設防滴布、養生膠帶保護；實機測試功能、觀察結霜與溫差。</p></div>
-          <div class="timeline-item"><h3 class="font-semibold">步驟 3｜拆機與深度清洗</h3><p class="muted text-sm mt-1">清洗熱交換器、風鼓、導風坡道、濾網與集水盤；環保藥劑不傷材。</p></div>
-          <div class="timeline-item"><h3 class="font-semibold">步驟 4｜組裝回測與漏水檢查</h3><p class="muted text-sm mt-1">恢復裝機、運轉測試、檢查異音/滴水，確認運作穩定。</p></div>
+          <div class="timeline-item"><h3 class="font-semibold">步驟 1｜線上估價與預約</h3><p class="muted text-sm mt-1">LINE 洽詢清洗事宜、設備照片，安排時段並確認費用區間。</p></div>
+          <div class="timeline-item"><h3 class="font-semibold">步驟 2｜到府前防護與檢查</h3><p class="muted text-sm mt-1">鋪設養生膠帶保護；實機測試功能、觀察機況、風量與溫差。</p></div>
+          <div class="timeline-item"><h3 class="font-semibold">步驟 3｜拆機與深度清洗</h3><p class="muted text-sm mt-1">清洗熱交換器、風鼓、導風坡道、濾網與集水盤、疏通排水管；環保藥劑不傷材。</p></div>
+          <div class="timeline-item"><h3 class="font-semibold">步驟 4｜組裝回測與漏水檢查</h3><p class="muted text-sm mt-1">恢復裝機、運轉測試、檢查機況/滴水，確認運作穩定。</p></div>
           <div class="timeline-item"><h3 class="font-semibold">步驟 5｜收尾清場與保固說明</h3><p class="muted text-sm mt-1">現場清潔、提供對照圖與保養貼紙，說明 14 天保固內容。</p></div>
         </div>
       </div>
@@ -299,12 +301,12 @@
         <details class="faq" open>
           <summary>冷氣施工</summary>
           <div class="faq-content">
-            <p class="card-desc">請提前清出室內機下方空間以便擺放 A 字梯；若為大型衣櫃/床/沙發等，師傅將視情況協助判斷是否可移動。</p>
+            <p class="card-desc">可提前清出室內機下方空間以便擺放 A 字梯；若為大型衣櫃/床/沙發等，師傅將視情況協助判斷是否可移動。</p>
           </div>
         </details>
-        <details class="faq"><summary>直立式洗衣機施工</summary><div class="faq-content"><ul class="card-list"><li>請先清空內桶與上蓋置物，避免震動掉落。</li><li>狹窄陽台/浴室可先拍照提供，加快評估。</li></ul></div></details>
-        <details class="faq"><summary>水塔清洗</summary><div class="faq-content"><ul class="card-list"><li>確認屋頂/機房通道可進出，提供容量與材質。</li><li>如需停水公告請提前申請；清洗期間建議事先儲水。</li></ul></div></details>
-        <details class="faq"><summary>自來水管清洗</summary><div class="faq-content"><ul class="card-list"><li>施工期間接入脈衝設備，請保留廚房/浴室可作業區。</li><li>若有淨水器/熱水器/軟水機，請先提供型號或告知。</li></ul></div></details>
+        <details class="faq"><summary>直立式洗衣機施工</summary><div class="faq-content"><ul class="card-list"><li>可先清空內桶與上蓋置物，避免震動掉落。</li><li>狹窄陽台/浴室可先拍照提供，加快評估。</li></ul></div></details>
+        <details class="faq"><summary>水塔清洗</summary><div class="faq-content"><ul class="card-list"><li>確認屋頂/機房通道可進出，提供容量。</li><li>如需停水公告請提前申請；清洗期間建議事先儲水。</li></ul></div></details>
+        <details class="faq"><summary>自來水管清洗</summary><div class="faq-content"><ul class="card-list"><li>施工期間接入脈衝設備，請保留廚房/浴室可作業區。</li><li>若有淨水器/熱水器/軟水機，屆時將關閉相關電源與進水口。</li></ul></div></details>
         <details class="faq"><summary>通用提醒</summary><div class="faq-content"><ul class="card-list"><li>若需停車證或車位費，請事先告知。</li><li>請確保施工用電與水源可用；如需搬運請協助預留電梯。</li><li>幼童/長者/寵物施工時建議暫時隔離。</li></ul></div></details>
       </div>
     </div>
@@ -341,7 +343,7 @@
         <ul class="card-list">
           <li><strong>作業方式：</strong>現場掛壁式清洗，不移機不拆室內管線。</li>
           <li><strong>拆卸部件：</strong>外殼、濾網、集水盤等可拆零件。</li>
-          <li><strong>清洗部位：</strong>熱交換器（鋁鰭片）、鼓風扇、導風坡道、濾網、集水盤與排水孔、外殼。</li>
+          <li><strong>清洗部位：</strong>熱交換器（鋁鰭片）、鼓風扇、導風坡道、濾網、集水盤與外殼、疏通排水孔。</li>
           <li><strong>工具技巧：</strong>高壓清洗搭配可調噴嘴，依材質調整水壓避免損傷與潑濺。</li>
           <li><strong>環保藥劑：</strong>弱性環保清潔劑，不傷塑料金屬、不易殘留、無異味。</li>
           <li><strong>紀錄回報：</strong>清洗前後拍照存證，提供客戶留存，作為下次保養參考。</li>
@@ -355,7 +357,7 @@
         <ul class="card-list">
           <li>零件復原組裝：外殼、濾網、集水盤擦乾並鎖回；卡扣/螺絲逐一確認。</li>
           <li>功能回測確認：再次運轉檢查異音、水滴、出風，確保穩定。</li>
-          <li>清潔作業區域：移除養生膠帶與防水墊，現場清理無水漬/髒污/垃圾。</li>
+          <li>清潔作業區域：移除養生膠帶與防水布，現場清理無水漬/髒污/垃圾。</li>
           <li>注意事項：清洗後建議開機 30 分鐘通風；若短暫有藥劑味，可開窗加強通風。</li>
           <li>清洗完成回報：提供前後對照圖，回答現場提問，張貼保養貼紙（日期/下次建議/聯絡資訊）。</li>
         </ul>
@@ -366,7 +368,7 @@
       <div class="faq-content">
         <ul class="card-list">
           <li><strong>保固期間：</strong>清洗完成起 14 天。</li>
-          <li><strong>保固內容：</strong>漏水、異音、風速異常等清洗關聯問題，專人到府處理至正常。</li>
+          <li><strong>保固內容：</strong>漏水、使用異常等清洗關聯問題，專人到府處理至正常。</li>
           <li><strong>排除條件：</strong>原本安裝不良、機件老舊/破裂/鏽蝕/耗損等非清洗因素不在範圍。</li>
         </ul>
         <p class="card-desc">📞 有狀況請立即聯繫（電話 / LINE），我們負責到底。</p>
@@ -435,12 +437,12 @@
 
   <!-- FAQ -->
   <section id="faq" class="bg-slate-50 reveal">
-    <div class="max-w-6xl mx-auto px-4 py-12">
+    <div class="max-w-6xl mx.auto px-4 py-12">
       <h2 class="text-2xl md:text-3xl font-bold mb-6">常見問題</h2>
-      <details class="faq"><summary>清洗會不會弄髒室內？</summary><div class="faq-content"><p>作業前會做防滴與遮蔽，完工會收拾乾淨。</p></div></details>
-      <details class="faq"><summary>多久清一次比較好？</summary><div class="faq-content"><p>一般家用建議 6–12 個月清洗一次；若有過敏或寵物，建議頻率更高。</p></div></details>
+      <details class="faq"><summary>清洗會不會弄髒室內？</summary><div class="faq-content"><p>作業前會做防護與遮蔽，完工會收拾乾淨。</p></div></details>
+      <details class="faq"><summary>多久清一次比較好？</summary><div class="faq-content"><p>一般家用建議 1–2 年清洗一次；若有過敏或寵物，建議頻率更高。</p></div></details>
       <details class="faq"><summary>檢測到異常還會清洗嗎？</summary><div class="faq-content"><p>會先與您溝通風險與可能後果，再共同決定是否繼續；若為冷媒/安裝問題，建議由冷凍專業處理。</p></div></details>
-      <details class="faq"><summary>清洗後若有問題怎麼處理？有保固嗎？</summary><div class="faq-content"><p>提供 14 天售後保固，若出現漏水、異音、風速異常等清洗關聯問題，將由專人到府處理；安裝不良或機件老化等非清洗因素不在範圍。</p></div></details>
+      <details class="faq"><summary>清洗後若有問題怎麼處理？有保固嗎？</summary><div class="faq-content"><p>提供 14 天售後保固，若出現漏水、使用異常等清洗關聯問題，將由專人到府處理；安裝不良或機件老化等非清洗因素不在範圍。</p></div></details>
     </div>
   </section>
 
@@ -460,7 +462,7 @@
       <div class="p-5 rounded-2xl border">
         <h3 class="font-bold">服務資訊</h3>
         <ul class="mt-3 text-sm">
-          <li>服務範圍：台北・新北・基隆（其他地區請私訊）</li>
+          <li>服務範圍：皆可服務（除宜、花、東、屏）</li>
           <li>可附照片估價／可開立發票／14 天售後保固</li>
           <li>施工前請確保水電正常供應，並協助保留必要空間</li>
         </ul>
