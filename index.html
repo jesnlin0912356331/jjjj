@@ -7,11 +7,11 @@
   <meta name="description" content="專業到府清洗：冷氣、直立式洗衣機、水塔、自來水管。透明價格、到府快速、提供保固與發票。立即以 LINE/電話預約。" />
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Favicon / Icons（使用你的圓形去背圖） -->
+  <!-- Favicon / Icons -->
   <link rel="icon" type="image/png" href="logo-mark.png" sizes="32x32">
   <link rel="apple-touch-icon" href="logo-mark.png" sizes="180x180">
 
-  <!-- Open Graph 分享圖（暫用 1.png；之後可輸出 1200×630） -->
+  <!-- Open Graph -->
   <meta property="og:title" content="自然大叔｜冷氣・洗衣機・水塔・自來水管清洗">
   <meta property="og:description" content="專業到府清洗｜透明價格｜完工保固｜可開立發票">
   <meta property="og:image" content="og.jpg">
@@ -53,10 +53,10 @@
     :root{
       --bg:#fff; --text:#0f172a; --muted:#475569;
       --card-bg:#fff; --border:#e2e8f0;
-      --primary:#06C755; --primary-hover:#04b34c;      /* 淺色：LINE 綠 */
+      --primary:#06C755; --primary-hover:#04b34c;
       --success:#059669; --success-hover:#047857;
       --ghost-bg:#fff; --ghost-border:#cbd5e1;
-      --accent:#3b7d2b;                                 /* 依 LOGO 深綠 */
+      --accent:#3b7d2b;
       --text-strong:#0b1220;
     }
     @media (prefers-color-scheme: dark){
@@ -163,44 +163,38 @@
     body.dark .btn-ghost{ background: rgba(255,255,255,.06); border-color:#334155; color:#e5e7eb; }
     body.dark .btn-ghost:hover{ background: rgba(255,255,255,.1) }
     body.dark .card-desc{ color:#cbd5e1 }
-    /* 深色下：主按鈕用亮藍提高對比 */
     body.dark .btn-primary{ background:#3b82f6; color:#fff; }
     body.dark .btn-primary:hover{ background:#60a5fa; }
 
     /* =========================
        A 方案：放大導覽列 LOGO（新增）
        ========================= */
-    .brand-logo{ height:clamp(40px, 8vw, 72px); width:auto } /* 手機 ~40px；桌機上限 72px */
-    /* 提升導覽列內邊距些微，避免 LOGO 太貼邊 */
+    .brand-logo{ height:clamp(40px, 8vw, 72px); width:auto }
     header .max-w-6xl > .px-4{ padding-top:.35rem; padding-bottom:.35rem }
     @media(min-width:768px){
       header .max-w-6xl > .px-4{ padding-top:.5rem; padding-bottom:.5rem }
     }
-    /* 導覽列連結間距自適應，避免擠到右側按鈕 */
     header nav{ gap:clamp(12px, 2vw, 24px) }
+
+    /* ========= 新增：浮動按鈕 ========= */
+    .fab{position:fixed;right:1rem;z-index:60;display:flex;align-items:center;justify-content:center;border-radius:9999px;
+         box-shadow:0 8px 24px rgba(0,0,0,.22);cursor:pointer;transition:transform .2s ease,opacity .3s ease,box-shadow .2s ease}
+    .fab:hover{transform:translateY(-1px) scale(1.05);box-shadow:0 12px 28px rgba(0,0,0,.28)}
+    .fab.is-hidden{opacity:0;pointer-events:none}
+    /* 讓返回頂部在主題切換鈕之上，不重疊 */
+    .fab-top{bottom:calc(9rem + env(safe-area-inset-bottom,0px));width:48px;height:48px;background:#0ea5e9;color:#fff;font-size:1.25rem}
+    .fab-book{bottom:calc(1rem + env(safe-area-inset-bottom,0px));min-width:48px;height:48px;padding:0 1.1rem;background:var(--primary);color:#fff;font-weight:800}
+    @media (max-width:767.98px){ .fab-top{bottom:calc(9.5rem + env(safe-area-inset-bottom,0px))} }
   </style>
 </head>
 
-<body data-theme>
+<body id="top" data-theme>
   <!-- Header -->
   <header class="bg-white/90 sticky top-0 backdrop-blur z-50 border-b">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <!-- 左側品牌：使用橫式 LOGO；深色時加陰影增對比 -->
       <a href="index.html" class="flex items-center gap-3">
-        <!-- 淺色 -->
-        <img
-          src="logo-horizontal.png"
-          srcset="logo-horizontal.png 1x, logo-horizontal.png 2x"
-          alt="自然大叔 Natural Uncle"
-          class="brand-logo block dark:hidden"
-          width="320" height="80">
-        <!-- 深色（同圖＋陰影） -->
-        <img
-          src="logo-horizontal.png"
-          srcset="logo-horizontal.png 1x, logo-horizontal.png 2x"
-          alt="" aria-hidden="true"
-          class="brand-logo hidden dark:block drop-shadow-[0_0_8px_rgba(0,0,0,.35)]"
-          width="320" height="80">
+        <img src="logo-horizontal.png" srcset="logo-horizontal.png 1x, logo-horizontal.png 2x" alt="自然大叔 Natural Uncle" class="brand-logo block dark:hidden" width="320" height="80">
+        <img src="logo-horizontal.png" srcset="logo-horizontal.png 1x, logo-horizontal.png 2x" alt="" aria-hidden="true" class="brand-logo hidden dark:block drop-shadow-[0_0_8px_rgba(0,0,0,.35)]" width="320" height="80">
         <span class="sr-only">自然大叔 Natural Uncle</span>
       </a>
 
@@ -220,21 +214,21 @@
     </div>
   </header>
 
-  <!-- Hero（右上角品牌水印） -->
+  <!-- Hero -->
   <section class="relative bg-gradient-to-b from-sky-50 to-white">
-  <div class="max-w-6xl mx-auto px-4 py-14 text-center">
-    <h1 class="text-3xl md:text-5xl font-extrabold">冷氣・洗衣機・水塔・自來水管 到府專業清洗</h1>
-    <p class="mt-4 text-lg muted">透明價格｜完工保固｜環保清潔劑｜可開立發票</p>
-    <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
-      <a href="tel:+886912356331" class="btn btn-ghost">一鍵撥打</a>
-      <a href="https://line.me/R/ti/p/@uncle888" class="btn btn-primary">LINE 立即預約</a>
-      <a href="https://yourdomain.com/booking" class="btn btn-success">表單免費估價</a>
+    <div class="max-w-6xl mx-auto px-4 py-14 text-center">
+      <h1 class="text-3xl md:text-5xl font-extrabold">冷氣・洗衣機・水塔・自來水管 到府專業清洗</h1>
+      <p class="mt-4 text-lg muted">透明價格｜完工保固｜環保清潔劑｜可開立發票</p>
+      <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="tel:+886912356331" class="btn btn-ghost">一鍵撥打</a>
+        <a href="https://line.me/R/ti/p/@uncle888" class="btn btn-primary">LINE 立即預約</a>
+        <a href="https://yourdomain.com/booking" class="btn btn-success">表單免費估價</a>
+      </div>
+      <ul class="mt-6 flex flex-wrap gap-3 justify-center text-sm muted">
+        <li>累積服務 2,000+ 戶</li><li>到府 2–3 小時完工</li><li>設備保護與現場防滴處理</li>
+      </ul>
     </div>
-    <ul class="mt-6 flex flex-wrap gap-3 justify-center text-sm muted">
-      <li>累積服務 2,000+ 戶</li><li>到府 2–3 小時完工</li><li>設備保護與現場防滴處理</li>
-    </ul>
-  </div>
-</section>
+  </section>
 
   <!-- 服務項目 -->
   <section id="services" class="max-w-6xl mx-auto px-4 py-12 reveal">
@@ -437,7 +431,7 @@
 
   <!-- FAQ -->
   <section id="faq" class="bg-slate-50 reveal">
-    <div class="max-w-6xl mx.auto px-4 py-12">
+    <div class="max-w-6xl mx-auto px-4 py-12">
       <h2 class="text-2xl md:text-3xl font-bold mb-6">常見問題</h2>
       <details class="faq"><summary>清洗會不會弄髒室內？</summary><div class="faq-content"><p>作業前會做防護與遮蔽，完工會收拾乾淨。</p></div></details>
       <details class="faq"><summary>多久清一次比較好？</summary><div class="faq-content"><p>一般家用建議 1–2 年清洗一次；若有過敏或寵物，建議頻率更高。</p></div></details>
@@ -470,20 +464,15 @@
     </div>
   </section>
 
-  <!-- Footer（含 LOGO 圓標） -->
+  <!-- Footer -->
   <footer class="bg-white border-t">
-  <div class="max-w-6xl mx-auto px-4 py-8 text-sm muted flex items-center gap-3">
-    <img
-      src="logo-mark.png"
-      alt=""
-      class="h-10 md:h-12 w-auto opacity-80 dark:opacity-90"
-      loading="lazy"
-      width="96" height="96">
-    <span>© <span id="year"></span> 自然大叔 Natural Uncle｜統編：88537528</span>
-  </div>
-</footer>
+    <div class="max-w-6xl mx-auto px-4 py-8 text-sm muted flex items-center gap-3">
+      <img src="logo-mark.png" alt="" class="h-10 md:h-12 w-auto opacity-80 dark:opacity-90" loading="lazy" width="96" height="96">
+      <span>© <span id="year"></span> 自然大叔 Natural Uncle｜統編：88537528</span>
+    </div>
+  </footer>
 
-  <!-- 行動版浮動快速按鈕 -->
+  <!-- 行動版浮動快速按鈕（保留） -->
   <div class="fixed bottom-4 right-4 flex flex-col gap-2 md:hidden mobile-fab">
     <a href="tel:+886912356331" class="btn btn-ghost">撥打電話</a>
     <a href="https://line.me/R/ti/p/@uncle888" class="btn btn-primary">LINE 諮詢</a>
@@ -491,6 +480,10 @@
 
   <!-- 深/淺色切換（可拖曳） -->
   <button id="themeToggle" class="theme-toggle" aria-label="切換深淺色" aria-pressed="false">🌙</button>
+
+  <!-- 新增：浮動按鈕（返回頂部 + 我要預約） -->
+  <a href="#top" id="backTop" class="fab fab-top is-hidden" aria-label="返回頂部" title="返回頂部">↑</a>
+  <a href="https://yourdomain.com/booking" class="fab fab-book" aria-label="我要預約" title="我要預約">我要預約</a>
 
   <script>
     /* 年份自動更新 */
@@ -541,6 +534,18 @@
       btn.addEventListener('pointermove', (e)=>{ if(!dragging) return; const dx=e.clientX-startX, dy=e.clientY-startY; if(Math.abs(dx)>THRESHOLD || Math.abs(dy)>THRESHOLD) moved=true; if(!moved) return; const nx=clamp(origin.x+dx,8,window.innerWidth-56); const ny=clamp(origin.y+dy,8,window.innerHeight-56); applyPos({x:nx,y:ny}); });
       btn.addEventListener('pointerup', (e)=>{ if(!dragging) return; dragging=false; btn.releasePointerCapture(e.pointerId); if(moved){ const r=btn.getBoundingClientRect(); savePos({x:r.left,y:r.top}); }else{ toggleTheme(); } });
       window.addEventListener('resize', ()=>{ const r=btn.getBoundingClientRect(); const p={x:clamp(r.left,8,window.innerWidth-56), y:clamp(r.top,8,window.innerHeight-56)}; applyPos(p); savePos(p); });
+    })();
+
+    /* 返回頂部顯示控制 */
+    (()=>{
+      const backTop = document.getElementById('backTop');
+      const THRESHOLD = 360;
+      function onScroll(){
+        if (window.scrollY > THRESHOLD) backTop.classList.remove('is-hidden');
+        else backTop.classList.add('is-hidden');
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
     })();
   </script>
 </body>
