@@ -16,54 +16,138 @@
   <meta property="og:url" content="https://yourdomain.com/pricing.html" />
 
   <style>
-    html{scroll-behavior:smooth}
-
-    /* ========= 顏色與對比（與首頁一致） ========= */
+    /* 基本主題變數（預設跟隨系統） */
     :root{
-      /* Light：畫布更深、字更黑、邊界更清楚 */
+      --bg:#fff; --text:#0f172a; --muted:#475569;
+      --card:#fff; --border:#e2e8f0;
+      --primary:#06C755; --primary-hover:#04b34c; --accent:#3b7d2b;
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b1220; --text:#e5e7eb; --muted:#94a3b8;
+        --card:#0f172a; --border:#1f2937; --accent:#fbbf24;
+      }
+    }
+    /* 明確的 dark/light 類別，與首頁同步（localStorage: theme-pref） */
+    body.dark{
+      --bg:#0b1220; --text:#e5e7eb; --muted:#94a3b8;
+      --card:#0f172a; --border:#1f2937; --accent:#fbbf24;
+    }
+    body.light{
+      --bg:#fff; --text:#0f172a; --muted:#475569;
+      --card:#fff; --border:#e2e8f0; --accent:#3b7d2b;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text)}
+    .muted{color:var(--muted)}
+    header,footer{background:var(--card)}
+    body.dark header{background:rgba(15,23,42,.92);border-color:#334155}
+    body.dark footer{background:#0f172a;border-color:#334155}
+
+    /* 元件 */
+    .card{background:var(--card);border:1px solid var(--border);border-radius:1rem;padding:1.25rem}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:.7rem 1.1rem;border-radius:.75rem;font-weight:700;transition:transform .15s ease,background-color .2s ease,box-shadow .2s ease}
+    .btn:hover{transform:translateY(-1px)}
+    .btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-hover)}
+    .btn-outline{border:1px solid var(--border);color:var(--text);background:var(--card)}
+    .toc a{padding:.5rem .75rem;border:1px solid var(--border);border-radius:.6rem;transition:background-color .2s ease}
+    .toc a:hover{background:var(--primary);color:#fff}
+    .price th{font-weight:800}
+    table{width:100%;border-collapse:collapse;text-align:left}
+    thead th{border-bottom:1px solid var(--border);padding:.75rem .5rem}
+    tbody td{border-bottom:1px solid var(--border);padding:.7rem .5rem}
+    body.dark thead th, body.dark tbody td{border-color:#334155}
+
+    /* 浮動按鈕（返回頂部 + LINE 預約） */
+    .fab{position:fixed;right:1rem;z-index:60;display:flex;align-items:center;justify-content:center;border-radius:9999px;
+         box-shadow:0 8px 24px rgba(0,0,0,.22);cursor:pointer;transition:transform .2s ease,opacity .3s ease,box-shadow .2s ease}
+    .fab:hover{transform:translateY(-1px) scale(1.05);box-shadow:0 12px 28px rgba(0,0,0,.28)}
+    .fab.is-hidden{opacity:0;pointer-events:none}
+    .fab-top{bottom:calc(5rem + env(safe-area-inset-bottom,0px));width:48px;height:48px;background:#0ea5e9;color:#fff;font-size:1.25rem}
+    .fab-book{bottom:calc(1rem + env(safe-area-inset-bottom,0px));min-width:48px;height:48px;padding:0 1.1rem;background:var(--primary);color:#fff;font-weight:800}
+    @media (max-width:767.98px){ .fab-top{bottom:calc(5.5rem + env(safe-area-inset-bottom,0px))} }
+
+    /* Header 導覽美化（置中膠囊選單） */
+    .nav-shell{
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.7);
+      border-radius:9999px;
+      padding:.25rem;
+      backdrop-filter:saturate(140%) blur(8px);
+    }
+    body.dark .nav-shell{
+      background:rgba(15,23,42,.6);
+      border-color:#334155;
+    }
+    .nav-pill{
+      display:inline-flex;align-items:center;gap:.4rem;
+      padding:.5rem 1rem;border-radius:9999px;
+      font-weight:800;font-size:.9rem;
+      transition:background-color .2s ease, transform .15s ease, color .2s ease;
+      white-space:nowrap;
+    }
+    .nav-pill:hover{transform:translateY(-1px)}
+    .nav-pill:is(:hover,:focus-visible){background:rgba(148,163,184,.25)}
+    body.dark .nav-pill:is(:hover,:focus-visible){background:rgba(148,163,184,.15)}
+    .nav-active{background:var(--primary);color:#fff}
+    .nav-active:hover{background:var(--primary-hover)}
+
+    /* 手機：隱藏水平捲軸樣式 */
+    .no-scrollbar::-webkit-scrollbar{display:none}
+    .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none}
+
+    /* 🔧 深色模式可讀性修正：CTA 標題在淺底上改用深色 */
+    body.dark .cta-heading{ color:#0b1220 !important; }
+
+    /* =========================
+       ↓ 覆蓋式「色彩與對比升級」（與首頁一致） ↓
+       ========================= */
+
+    /* Light 基底更有層次，字色更深 */
+    :root{
+      --bg:#f3f5f9;               /* 畫布：冷淺灰 */
+      --text:#0b1220;             /* 主要文字：深藍黑 */
+      --muted:#5b6b7f;            /* 次文字：中灰藍 */
+
+      --card:#ffffff;
+      --border:#d7deea;           /* 分隔更清楚 */
+
+      --primary:#06C755;
+      --primary-hover:#05b451;
+
+      /* 輔助強調色（藍）統一作為主 CTA 與裝飾 */
+      --accent:#2563eb;
+    }
+
+    /* Dark 對比與可讀性加強 */
+    @media (prefers-color-scheme: dark){
+      :root{
+        --bg:#0b1220;
+        --text:#e7edf6;           /* 對比高、偏藍白 */
+        --muted:#afbbce;          /* 次文字提升可讀 */
+        --card:#0f172a;
+        --border:#233046;
+        --accent:#60a5fa;         /* 深色下 CTA 偏亮藍 */
+      }
+    }
+    body.dark{
+      --bg:#0b1220;
+      --text:#e7edf6;
+      --muted:#afbbce;
+      --card:#0f172a;
+      --border:#233046;
+      --accent:#60a5fa;
+    }
+    body.light{
       --bg:#f3f5f9;
       --text:#0b1220;
       --muted:#5b6b7f;
       --card:#ffffff;
       --border:#d7deea;
-
-      --primary:#06C755;
-      --primary-hover:#05b451;
-
-      --accent:#2563eb;    /* 襯色藍（行為色） */
-      --text-strong:#0a0f1a;
-    }
-    @media (prefers-color-scheme: dark){
-      :root{
-        /* Dark：提升對比、字更亮、邊界加強 */
-        --bg:#0b1220;
-        --text:#e7edf6;
-        --muted:#afbbce;
-        --card:#0f172a;
-        --border:#233046;
-
-        --primary:#06C755;
-        --primary-hover:#05b451;
-
-        --accent:#60a5fa;
-        --text-strong:#ffffff;
-      }
-    }
-    /* 明確的 dark/light 類別（與首頁同步，localStorage: theme-pref） */
-    body.dark{
-      --bg:#0b1220; --text:#e7edf6; --muted:#afbbce;
-      --card:#0f172a; --border:#233046;
-      --primary:#06C755; --primary-hover:#05b451;
-      --accent:#60a5fa; --text-strong:#ffffff;
-    }
-    body.light{
-      --bg:#f3f5f9; --text:#0b1220; --muted:#5b6b7f;
-      --card:#ffffff; --border:#d7deea;
-      --primary:#06C755; --primary-hover:#05b451;
-      --accent:#2563eb; --text-strong:#0a0f1a;
+      --accent:#2563eb;
     }
 
-    /* 畫布背景：雙輻射暈 + 漸層（層次升級） */
+    /* 畫布背景：雙輻射暈 + 漸層（提升層次感） */
     body{
       background:
         radial-gradient(1200px 600px at 20% -10%, rgba(37,99,235,.12), transparent 60%),
@@ -78,113 +162,79 @@
         linear-gradient(#0f172a, #0b1220);
     }
 
-    .muted{color:var(--muted)}
-    header,footer{
-      background:rgba(255,255,255,.88);
-      border-color:var(--border);
-      backdrop-filter:saturate(1.1) blur(8px);
-      box-shadow:0 2px 12px rgba(2,6,23,.04);
-    }
-    body.dark header{ background:rgba(15,23,42,.88); border-color:#334155 }
-    body.dark footer{ background:#0f172a; border-color:#334155 }
-
-    /* ========= 元件（陰影/邊界與首頁一致） ========= */
+    /* 卡片層次與陰影（深色也清楚） */
     .card{
-      background:var(--card);
       border:1px solid var(--border);
-      border-radius:1rem;
-      padding:1.25rem;
       box-shadow:0 6px 20px rgba(15,23,42,.06);
     }
     body.dark .card{ box-shadow:0 8px 24px rgba(0,0,0,.35) }
 
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:.7rem 1.1rem;border-radius:.75rem;font-weight:700;
-      transition:transform .15s ease,background-color .2s ease,box-shadow .2s ease;
-      box-shadow:0 3px 10px rgba(2,6,23,.06);
-    }
-    .btn:hover{transform:translateY(-1px)}
-    .btn-primary{background:var(--accent);color:#fff}
-    .btn-primary:hover{background:#1d4ed8}
-    .btn-outline{border:1px solid var(--border);color:var(--text);background:var(--card)}
-    .toc a{
-      padding:.5rem .75rem;border:1px solid var(--border);border-radius:.6rem;
-      transition:background-color .2s ease, color .2s ease, border-color .2s ease
-    }
-    .toc a:hover{background:var(--accent);color:#fff;border-color:transparent}
+    /* CTA：統一以 accent 藍為主行為色（與首頁一致） */
+    .btn-primary{ background:var(--accent); color:#fff }
+    .btn-primary:hover{ background:#1d4ed8 }
 
-    /* ========= 表格（對比與列條紋） ========= */
-    table{width:100%;border-collapse:collapse;text-align:left}
+    /* 目錄膠囊 hover 改為 accent 藍 */
+    .toc a:hover{ background:var(--accent); color:#fff; border-color:transparent }
+
+    /* 表格：表頭加入細緻漸層、列條紋 */
     thead th{
-      border-bottom:1px solid var(--border);padding:.75rem .5rem;font-weight:800;color:var(--text-strong);
       background:linear-gradient(180deg, rgba(37,99,235,.08), rgba(37,99,235,0));
+      color:var(--text);
+      font-weight:800;
     }
-    tbody td{border-bottom:1px solid var(--border);padding:.7rem .5rem}
     tbody tr:nth-child(2n){ background:rgba(2,6,23,.03) }
-    body.dark thead th, body.dark tbody td{border-color:#334155}
     body.dark tbody tr:nth-child(2n){ background:rgba(255,255,255,.03) }
 
-    /* ========= 浮動按鈕（返回頂部 + 我要預約） ========= */
-    .fab{position:fixed;right:1rem;z-index:60;display:flex;align-items:center;justify-content:center;cursor:pointer}
-    .fab.is-hidden{opacity:0;pointer-events:none}
-    .fab-top{
-      bottom:calc(5rem + env(safe-area-inset-bottom,0px));
-      width:48px;height:48px;border-radius:9999px;
-      background:var(--accent);color:#fff;font-size:1.25rem;
-      box-shadow:0 8px 24px rgba(0,0,0,.22);
-      transition:transform .2s ease,opacity .3s ease,box-shadow .2s ease
+    /* Header/ Footer 透明玻璃感 + 邊界強化 */
+    header{
+      background:rgba(255,255,255,.88);
+      backdrop-filter:saturate(1.1) blur(8px);
+      border-bottom:1px solid var(--border);
+      box-shadow:0 2px 12px rgba(2,6,23,.04);
     }
-    .fab-top:hover{transform:translateY(-1px) scale(1.05);box-shadow:0 12px 28px rgba(0,0,0,.28)}
+    body.dark header{ background:rgba(15,23,42,.88) }
+    footer{
+      background:transparent;
+      border-top:1px solid var(--border);
+    }
 
-    /* ★ 與首頁一致：矩形實心、與 .btn 比例一致 */
-    .fab-book{
-      bottom:calc(1rem + env(safe-area-inset-bottom,0px));
-      display:inline-block;
-      padding:.75rem 1.25rem;
-      border-radius:.75rem;
-      font-weight:700; line-height:1.05;
-      background:var(--primary); color:#fff;
-      box-shadow:0 8px 24px rgba(0,0,0,.22);
-      transition:transform .2s ease,box-shadow .2s ease;
-      min-width:48px;
-    }
-    .fab-book:hover{transform:translateY(-1px) scale(1.05);box-shadow:0 12px 28px rgba(0,0,0,.28)}
-    @media (max-width:767.98px){ .fab-top{bottom:calc(5.5rem + env(safe-area-inset-bottom,0px))} }
+    /* 膠囊導覽：使用主品牌綠作為目前頁籤，hover 仍保留柔和底 */
+    .nav-active{ background:var(--primary); color:#fff }
+    .nav-active:hover{ background:var(--primary-hover) }
 
-    /* ========= 標題/字色強化 ========= */
-    h1,h2,h3{ color:var(--text-strong); letter-spacing:.2px }
-
-    /* ========= CTA（深色模式可讀性強化） ========= */
-    .cta .cta-heading{ color:var(--text-strong); }
-    .cta .cta-sub{ color:var(--muted); }
-    body.dark .cta .cta-heading{
-      color:#0b1220 !important;
-      text-shadow:0 1px 2px rgba(0,0,0,.35);
-    }
-    body.dark .cta .cta-sub{
-      color:#e5e7eb !important;      /* 明亮灰，提高對比 */
-      text-shadow:0 1px 2px rgba(0,0,0,.25);
-    }
+    /* 浮動元件與快速預約色彩同步 */
+    .fab-top{ background:var(--accent); color:#fff }
+    .fab-book{ background:var(--primary); color:#fff }
   </style>
 </head>
 <body id="top" data-theme>
-  <!-- Header -->
+  <!-- Header（行動裝置兩行設計；桌機置中） -->
   <header class="sticky top-0 z-50 backdrop-blur border-b">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-2" aria-label="返回首頁">
-        <img src="logo-mark.jpg" alt="自然大叔" class="h-8 w-8 rounded-md" />
-        <span class="font-extrabold tracking-tight">自然大叔</span>
-      </a>
-      <nav class="hidden md:flex gap-4 text-sm">
-        <a href="index.html">首頁</a>
-        <a href="pricing.html" class="font-bold">價格細項</a>
-        <a href="https://yourdomain.com/booking">預約</a>
-      </nav>
-      <div class="hidden md:flex gap-2">
-        <a href="https://line.me/R/ti/p/@uncle888" class="btn btn-primary">LINE 諮詢</a>
-        <a href="https://yourdomain.com/booking" class="btn btn-outline">線上預約</a>
+    <div class="max-w-6xl mx-auto px-4 py-3">
+      <!-- 第一行：品牌（左右留白，避免擠壓） -->
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2" aria-label="返回首頁">
+          <img src="logo-mark.jpg" alt="自然大叔" class="h-8 w-8 rounded-md" />
+          <span class="font-extrabold tracking-tight">自然大叔</span>
+        </a>
+        <span class="w-8 h-8" aria-hidden="true"></span>
       </div>
+
+      <!-- 第二行：手機導覽（全寬置中，可水平滑動） -->
+      <nav class="mt-2 md:hidden">
+        <div class="nav-shell no-scrollbar overflow-x-auto flex items-center justify-center gap-1 px-1">
+          <a href="index.html" class="nav-pill">首頁</a>
+          <a href="pricing.html" class="nav-pill nav-active" aria-current="page">價格細項</a>
+        </div>
+      </nav>
+
+      <!-- 桌機導覽（維持置中膠囊） -->
+      <nav class="hidden md:flex items-center justify-center mt-2">
+        <div class="nav-shell flex items-center justify-center gap-1 px-1">
+          <a href="index.html" class="nav-pill">首頁</a>
+          <a href="pricing.html" class="nav-pill nav-active" aria-current="page">價格細項</a>
+        </div>
+      </nav>
     </div>
   </header>
 
@@ -193,15 +243,15 @@
     <ol class="flex items-center gap-2 text-slate-500">
       <li><a href="index.html" class="underline">首頁</a></li>
       <li aria-hidden="true">/</li>
-      <li class="text-slate-700 dark:text-slate-200">服務與價格細項</li>
+      <li class="text-slate-700">服務與價格細項</li>
     </ol>
   </nav>
 
   <!-- 頁首說明 -->
   <section class="max-w-6xl mx-auto px-4 pb-4">
     <h1 class="text-3xl md:text-4xl font-extrabold">服務與價格細項</h1>
-    <p class="mt-2 muted">以下為各服務的基本價格、加價條件與作業內容。若有型號/位置特殊，請
-      <a href="https://line.me/R/ti/p/@uncle888" class="underline text-sky-700 dark:text-sky-300">LINE 傳照片</a>快速估價。</p>
+    <p class="mt-2 text-slate-600">以下為各服務的基本價格、加價條件與作業內容。若有型號/位置特殊，請
+      <a href="https://line.me/R/ti/p/@uncle888" class="underline text-sky-700">LINE 傳照片</a>快速估價。</p>
   </section>
 
   <!-- 目錄 -->
@@ -237,7 +287,7 @@
       </div>
       <details class="mt-4">
         <summary class="font-semibold cursor-pointer">加價與不承作情形</summary>
-        <ul class="list-disc pl-6 mt-2 text-sm muted">
+        <ul class="list-disc pl-6 mt-2 text-sm text-slate-600">
           <li>高空/需吊掛作業（另估）。</li>
           <li>面板/外殼斷裂、卡扣缺失，清洗前會先告知風險。</li>
           <li>冷媒不足、安裝不良屬冷凍空調範疇，建議先處理後再清洗。</li>
@@ -267,7 +317,7 @@
       </div>
       <details class="mt-4">
         <summary class="font-semibold cursor-pointer">注意與限制</summary>
-        <ul class="list-disc pl-6 mt-2 text-sm muted">
+        <ul class="list-disc pl-6 mt-2 text-sm text-slate-600">
           <li>滾筒式不在此服務。</li>
           <li>機齡過高塑料脆化，拆裝風險會先說明。</li>
         </ul>
@@ -297,7 +347,7 @@
       </div>
       <details class="mt-4">
         <summary class="font-semibold cursor-pointer">注意與限制</summary>
-        <ul class="list-disc pl-6 mt-2 text-sm muted">
+        <ul class="list-disc pl-6 mt-2 text-sm text-slate-600">
           <li>如需社區停水公告，請屋主/管委會提前申請。</li>
           <li>清洗期間建議事先儲水，避免無水可用。</li>
         </ul>
@@ -327,7 +377,7 @@
       </div>
       <details class="mt-4">
         <summary class="font-semibold cursor-pointer">注意與限制</summary>
-        <ul class="list-disc pl-6 mt-2 text-sm muted">
+        <ul class="list-disc pl-6 mt-2 text-sm text-slate-600">
           <li>施工期間需可接入設備，請預留廚房/浴室作業空間。</li>
           <li>若有熱水器/軟水機/淨水器，將暫時關閉進出水與電源。</li>
         </ul>
@@ -340,21 +390,21 @@
     <div class="grid md:grid-cols-3 gap-6">
       <div class="card p-6">
         <h3 class="text-xl font-bold">售後保固</h3>
-        <p class="mt-2 text-sm muted">
+        <p class="mt-2 text-sm text-slate-600">
           清洗完成起 14 天。漏水、使用異常等清洗關聯問題，專人到府處理至正常。<br>
           原本安裝不良、機件老舊/破裂/鏽蝕/耗損等非清洗因素不在範圍。
         </p>
       </div>
       <div class="card p-6">
         <h3 class="text-xl font-bold">收費與發票</h3>
-        <p class="mt-2 text-sm muted">
+        <p class="mt-2 text-sm text-slate-600">
           現金/轉帳皆可，<strong>可開立發票(需另加5％營業稅)</strong><br>
           若需停車費或管制證，請事先告知。
         </p>
       </div>
       <div class="card p-6">
         <h3 class="text-xl font-bold">到府前準備</h3>
-        <ul class="mt-2 list-disc pl-6 text-sm muted">
+        <ul class="mt-2 list-disc pl-6 text-sm text-slate-600">
           <li>確保施工用電與水源可用；必要時預留電梯。</li>
           <li>冷氣施工請清出室內機下方 1–1.5m 空間以便 A 字梯。</li>
           <li>狹窄陽台/浴室可先拍照提供，加快評估。</li>
@@ -363,28 +413,25 @@
     </div>
   </section>
 
-  <!-- CTA（新增 .cta 類別，並用 .cta-heading / .cta-sub 控制顏色） -->
-  <section class="cta bg-slate-50/70 border-t">
+  <!-- CTA（深色模式標題可讀性已修正） -->
+  <section class="bg-slate-50 border-t">
     <div class="max-w-6xl mx-auto px-4 py-10 text-center">
       <h2 class="cta-heading text-2xl md:text-3xl font-extrabold">已看過價格了嗎？</h2>
-      <p class="cta-sub mt-2 text-base md:text-lg">可先 LINE 傳照片更精準，或直接預約指定時段。</p>
+      <p class="mt-2 muted">可先 LINE 傳照片更精準，或回到首頁查看價格表。</p>
       <div class="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
         <a href="https://line.me/R/ti/p/@uncle888" class="btn btn-primary">LINE 快速估價</a>
-        <a href="https://yourdomain.com/booking" class="btn btn-outline">線上預約</a>
         <a href="index.html#pricing" class="btn btn-outline" aria-label="回到首頁的價格表位置">返回首頁價格表</a>
       </div>
     </div>
   </section>
 
   <footer class="border-t">
-    <div class="max-w-6xl mx-auto px-4 py-8 text-sm text-slate-500 dark:text-slate-300">
-      © <span id="year"></span> 自然大叔 Natural Uncle｜統編：88537528
-    </div>
+    <div class="max-w-6xl mx-auto px-4 py-8 text-sm text-slate-500">© <span id="year"></span> 自然大叔 Natural Uncle｜統編：88537528</div>
   </footer>
 
-  <!-- 浮動按鈕：返回頂部 + 我要預約（樣式與首頁一致） -->
+  <!-- 浮動按鈕：返回頂部 + LINE 預約 -->
   <a href="#top" id="backTop" class="fab fab-top is-hidden" aria-label="返回頂部" title="返回頂部">↑</a>
-  <a href="https://yourdomain.com/booking" class="fab fab-book" aria-label="我要預約" title="我要預約">我要預約</a>
+  <a href="https://line.me/R/ti/p/@uncle888" class="fab fab-book" aria-label="LINE 預約" title="LINE 預約">LINE 預約</a>
 
   <script>
     // 年份
